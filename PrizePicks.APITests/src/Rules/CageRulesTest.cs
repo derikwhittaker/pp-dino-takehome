@@ -39,7 +39,7 @@ public class CageRulesTests
     [Test]
     public void IsPoweredOn_When_CagePowerStatus_IsActive_WillPass()
     {
-        var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatus.Active };
+        var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
         _cageRules.IsPoweredOn(cageUnderTest);
@@ -48,7 +48,7 @@ public class CageRulesTests
     [Test]
     public void IsPoweredOn_When_CagePowerStatus_IsDown_WillFalse()
     {
-        var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatus.Down };
+        var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatusType.Down };
 
         // throws an exception if something is wrong
         Assert.Throws<InvalidOperationException>(() => _cageRules.IsPoweredOn(cageUnderTest));
@@ -61,10 +61,9 @@ public class CageRulesTests
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
-            Species = Species.Tyrannosaurus,
-            Food = Food.Herbivore
+            Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
-        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatus.Active };
+        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
         _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest);
@@ -78,18 +77,16 @@ public class CageRulesTests
             new Dinosaur
             {
                 Id = 2,
-                Species = Species.Tyrannosaurus,
-                Food = Food.Herbivore
+                Species = new Species(FoodType.Herbivore, SpeciesType.Triceratops)
             }
         };
 
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
-            Species = Species.Tyrannosaurus,
-            Food = Food.Herbivore
+            Species = new Species(FoodType.Herbivore, SpeciesType.Ankylosaurus)
         };
-        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatus.Active };
+        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
         _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest);
@@ -103,18 +100,16 @@ public class CageRulesTests
             new Dinosaur
             {
                 Id = 2,
-                Species = Species.Tyrannosaurus,
-                Food = Food.Herbivore
+                Species = new Species(FoodType.Herbivore, SpeciesType.Triceratops)
             }
         };
 
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
-            Species = Species.Tyrannosaurus,
-            Food = Food.Carnivore
+            Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
-        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatus.Active };
+        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
         Assert.Throws<InvalidOperationException>(
@@ -130,18 +125,16 @@ public class CageRulesTests
             new Dinosaur
             {
                 Id = 2,
-                Species = Species.Tyrannosaurus,
-                Food = Food.Carnivore
+                Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
             }
         };
 
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
-            Species = Species.Tyrannosaurus,
-            Food = Food.Carnivore
+            Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
-        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatus.Active };
+        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
         _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest);
@@ -155,18 +148,16 @@ public class CageRulesTests
             new Dinosaur
             {
                 Id = 2,
-                Species = Species.Tyrannosaurus,
-                Food = Food.Carnivore
+                Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
             }
         };
 
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
-            Species = Species.Velociraptor,
-            Food = Food.Carnivore
+            Species = new Species(FoodType.Carnivore, SpeciesType.Velociraptor)
         };
-        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatus.Active };
+        var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
         Assert.Throws<InvalidOperationException>(

@@ -20,9 +20,11 @@ public class InMemoryDBTests
     [Test]
     public void Seed_WillBuildDataCorrectly()
     {
-        var expectedDinosoaurCount = 5;
+        var expectedSpeciesCount = 8;
+        var expectedDinosoaurCount = 9;
         var expectedCageCount = 2;
 
+        Assert.True(_inMemoryDB.Species().Count() == expectedSpeciesCount);
         Assert.True(_inMemoryDB.Dinosaurs().Count() == expectedDinosoaurCount);
         Assert.True(_inMemoryDB.Cages().Count() == expectedCageCount);
     }

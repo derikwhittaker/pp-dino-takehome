@@ -38,6 +38,7 @@ public class CageService : ICageService
 
         _cageRules.IsPoweredOn(cage);
         _cageRules.IsCageAtCapacity(cage);
+        _cageRules.IsDinoValidForCage(cage, dinosaur);
     }
 
     private void IsDinoValidForCage(ICage cage, IDinosaur dinosaur) { }

@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 using PrizePicks.API.Models;
 
 namespace PrizePicks.API.Data;
@@ -8,6 +6,7 @@ public class InMemoryDB : IDatabase
 {
     private static IList<ICage> _cages { get; set; }
     private static IList<IDinosaur> _dinosaurs { get; set; }
+    private static IList<ISpecies> _species { get; set; }
 
     public IEnumerable<ICage> Cages()
     {
@@ -85,6 +84,11 @@ public class InMemoryDB : IDatabase
         _dinosaurs.Add(instance);
     }
 
+    public IEnumerable<ISpecies> Species()
+    {
+        return _species;
+    }
+
     /// Seed/Populate below
 
     /// <summary>
@@ -92,6 +96,7 @@ public class InMemoryDB : IDatabase
     /// </summary>
     public static void Seed()
     {
+        SeedSpecies();
         SeedDinosaurs();
         SeedCages();
     }
@@ -104,36 +109,55 @@ public class InMemoryDB : IDatabase
             {
                 Id = 1,
                 Name = "Roary",
-                Food = Food.Carnivore,
-                Species = Species.Tyrannosaurus
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Triceratops)
             },
             new Dinosaur
             {
                 Id = 2,
                 Name = "Dizzy",
-                Food = Food.Herbivore,
-                Species = Species.Megalosaurus
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Megalosaurus)
             },
             new Dinosaur
             {
                 Id = 3,
                 Name = "Spike",
-                Food = Food.Carnivore,
-                Species = Species.Velociraptor
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Velociraptor)
             },
             new Dinosaur
             {
                 Id = 4,
                 Name = "T-Rexi",
-                Food = Food.Carnivore,
-                Species = Species.Tyrannosaurus
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
             },
             new Dinosaur
             {
                 Id = 5,
                 Name = "Rumble",
-                Food = Food.Herbivore,
-                Species = Species.Spinosaurus
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Spinosaurus)
+            },
+            new Dinosaur
+            {
+                Id = 6,
+                Name = "Leafia",
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Brachiosaurus)
+            },
+            new Dinosaur
+            {
+                Id = 7,
+                Name = "Staggy",
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Stegosaurus)
+            },
+            new Dinosaur
+            {
+                Id = 8,
+                Name = "VeggieRex",
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Ankylosaurus)
+            },
+            new Dinosaur
+            {
+                Id = 9,
+                Name = "Toppie",
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Triceratops)
             }
         };
     }
@@ -145,21 +169,30 @@ public class InMemoryDB : IDatabase
             new Cage
             {
                 Id = 1,
-                PowerStatus = PowerStatus.Active,
+                PowerStatus = PowerStatusType.Active,
                 Capacity = 1
-                // Name = "Roary",
-                // Food = Food.Carnivore,
-                // Species = Species.Tyrannosaurus
             },
             new Cage
             {
                 Id = 2,
-                PowerStatus = PowerStatus.Active,
+                PowerStatus = PowerStatusType.Active,
                 Capacity = 1
-                // Name = "Roary",
-                // Food = Food.Carnivore,
-                // Species = Species.Tyrannosaurus
             },
+        };
+    }
+
+    private static void SeedSpecies()
+    {
+        _species = new List<ISpecies>
+        {
+            new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus),
+            new Species(FoodType.Carnivore, SpeciesType.Velociraptor),
+            new Species(FoodType.Carnivore, SpeciesType.Spinosaurus),
+            new Species(FoodType.Carnivore, SpeciesType.Megalosaurus),
+            new Species(FoodType.Herbivore, SpeciesType.Brachiosaurus),
+            new Species(FoodType.Herbivore, SpeciesType.Stegosaurus),
+            new Species(FoodType.Herbivore, SpeciesType.Ankylosaurus),
+            new Species(FoodType.Herbivore, SpeciesType.Triceratops),
         };
     }
 }

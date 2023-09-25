@@ -52,7 +52,7 @@ public class CageRules : ICageRules
     /// <exception cref="CagePowerExceptionException"></exception>
     public void IsPoweredOn(ICage cage)
     {
-        if (cage.PowerStatus != PowerStatus.Active)
+        if (cage.PowerStatus != PowerStatusType.Active)
         {
             _logger.LogDebug($"Unable to use Cage {cage.Id} as it is not powered on");
             throw new InvalidOperationException(
@@ -79,23 +79,27 @@ public class CageRules : ICageRules
         }
 
         // We cannot mix the type of dino (Food)
-        if (cage.Dinosaurs.Any(x => x.Food != dinosaur.Food))
+        if (cage.Dinosaurs.Any(x => x.Species.Food != dinosaur.Species.Food))
         {
             _logger.LogDebug($"Unable to add Dino to Cage {cage.Id} as you cannot mix Food Types");
-            throw new InvalidOperationException($"Cage {cage.Id} cannot accept {dinosaur.Food}");
+            throw new InvalidOperationException(
+                $"Cage {cage.Id} cannot accept {dinosaur.Species.Food}"
+            );
         }
 
         // Carnivor's are special, they cannot be in a cage w/ another species
         //  If we get here, we know that all Dino's are Carnivors, so no need to do that check
         if (
-            dinosaur.Food == Food.Carnivore
-            && cage.Dinosaurs.Any(x => x.Species != dinosaur.Species)
+            dinosaur.Species.Food == FoodType.Carnivore
+            && cage.Dinosaurs.Any(x => x.Species.SpeciesType != dinosaur.Species.SpeciesType)
         )
         {
             _logger.LogDebug(
                 $"Unable to add Dino to Cage {cage.Id} as you cannot mix Carnivor Species "
             );
-            throw new InvalidOperationException($"Cage {cage.Id} cannot accept {dinosaur.Species}");
+            throw new InvalidOperationException(
+                $"Cage {cage.Id} cannot accept {dinosaur.Species.SpeciesType}"
+            );
         }
     }
 }

@@ -3,7 +3,7 @@ namespace PrizePicks.API.Models;
 public interface ICage
 {
     public int Id { get; set; }
-    public PowerStatus PowerStatus { get; set; }
+    public PowerStatusType PowerStatus { get; set; }
 
     public int Capacity { get; set; }
 
@@ -21,7 +21,7 @@ public class Cage : ICage
 
     public int Id { get; set; }
 
-    public PowerStatus PowerStatus { get; set; }
+    public PowerStatusType PowerStatus { get; set; }
 
     public int Capacity { get; set; }
 
