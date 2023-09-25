@@ -98,3 +98,19 @@ To launch the Web API projet, follow the following
 
 ### Technology/Packages Used
 This does not have a persisted DB, because of the time constraint we are using json files and repository pattern to support db actions.  
+
+
+
+## Developer 
+
+
+
+### Formatting/Validating
+
+This project has linting/formatting enabled on save, but that is limited.  The project also implemented Roslyn style valication (see [here](https://johnnyreilly.com/eslint-your-csharp-in-vs-code-with-roslyn-analyzers))
+
+To run the validation execute the following from the terminal
+cal
+```
+dotnet format style -v detailed --severity info --verify-no-changes
+```

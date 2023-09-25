@@ -8,14 +8,14 @@ namespace PrizePicks.API.Services;
 
 public interface ICageService
 {
-    public void AddDinosaur(ICage cage, IDinosaur dinosaur);
+    public Task AssociateDinosaurAsync(ICage cage, IDinosaur dinosaur);
 }
 
 public class CageService : ICageService
 {
     private readonly ILogger<CageService> _logger;
-    private ICageRepository _cageRepository;
-    private ICageRules _cageRules;
+    private readonly ICageRepository _cageRepository;
+    private readonly ICageRules _cageRules;
 
     public CageService(
         ILogger<CageService> logger,
@@ -28,18 +28,20 @@ public class CageService : ICageService
         _cageRepository = cageRepository;
     }
 
-    public async void AddDinosaur(ICage cage, IDinosaur dinosaur)
+    public async Task AssociateDinosaurAsync(ICage cage, IDinosaur dinosaur)
     {
         _logger.LogInformation($"Attempt add Dino with ID {dinosaur.Id} to Cage with Id {cage.Id}");
 
         // check to see if cage is powered on
         // check to see if cage is already at capacity
         // check to see if the dino is valid tye to be added to the cage
-
         _cageRules.IsPoweredOn(cage);
         _cageRules.IsCageAtCapacity(cage);
         _cageRules.IsDinoValidForCage(cage, dinosaur);
-    }
 
-    private void IsDinoValidForCage(ICage cage, IDinosaur dinosaur) { }
+        cage.AssociateDinosaur(dinosaur);
+
+        // We have valid info/rules, time to take action
+        await _cageRepository.Update(cage);
+    }
 }
