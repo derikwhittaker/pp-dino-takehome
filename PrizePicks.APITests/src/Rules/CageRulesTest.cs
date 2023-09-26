@@ -15,9 +15,17 @@ public class CageRulesTests
     private ICageRules _cageRules = new CageRules(new Mock<ILogger<CageRules>>().Object);
 
     [Test]
-    public void IsCageAtCapacity_When_CageCapacity_HasNotBeenReached_WillPass()
+    public void AssertCageNotAtCapacity_When_CageCapacity_HasNotBeenReached_WillPass()
     {
-        var dinosaurs = new List<IDinosaur> { new Dinosaur { Id = 1 } };
+        var dinosaurs = new List<IDinosaur>
+        {
+            new Dinosaur
+            {
+                Id = 1,
+                Name = "Fred",
+                Species = new Species()
+            }
+        };
 
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, Capacity = 2 };
 
@@ -26,9 +34,17 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsCageAtCapacity_When_CageCapacity_HasBeenReached_WillPass()
+    public void AssertCageNotAtCapacity_When_CageCapacity_HasBeenReached_WillPass()
     {
-        var dinosaurs = new List<IDinosaur> { new Dinosaur { Id = 1 } };
+        var dinosaurs = new List<IDinosaur>
+        {
+            new Dinosaur
+            {
+                Id = 1,
+                Name = "Fred",
+                Species = new Species()
+            }
+        };
 
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, Capacity = 1 };
 
@@ -39,7 +55,7 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsPoweredOn_When_CagePowerStatus_IsActive_WillPass()
+    public void AssertCageIsPoweredOn_When_CagePowerStatus_IsActive_WillPass()
     {
         var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatusType.Active };
 
@@ -48,7 +64,7 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsPoweredOn_When_CagePowerStatus_IsDown_WillFalse()
+    public void AssertCageIsPoweredOn_When_CagePowerStatus_IsDown_WillFalse()
     {
         var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatusType.Down };
 
@@ -59,12 +75,13 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsDinoValidForCage_When_CageIsEmpty_WillPass()
+    public void AssertDinoValidForCage_When_CageIsEmpty_WillPass()
     {
         var dinosaurs = new List<IDinosaur>();
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
+            Name = "Fred",
             Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
@@ -74,13 +91,14 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsDinoValidForCage_When_CageHasExisting_ButOfSameFoodType_WillPass()
+    public void AssertDinoValidForCage_When_CageHasExisting_ButOfSameFoodType_WillPass()
     {
         var dinosaurs = new List<IDinosaur>
         {
             new Dinosaur
             {
                 Id = 2,
+                Name = "Fred",
                 Species = new Species(FoodType.Herbivore, SpeciesType.Triceratops)
             }
         };
@@ -88,6 +106,7 @@ public class CageRulesTests
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
+            Name = "Fred",
             Species = new Species(FoodType.Herbivore, SpeciesType.Ankylosaurus)
         };
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
@@ -97,13 +116,14 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsDinoValidForCage_When_CageHasExisting_ButDifferentFoodType_WillFail()
+    public void AssertDinoValidForCage_When_CageHasExisting_ButDifferentFoodType_WillFail()
     {
         var dinosaurs = new List<IDinosaur>
         {
             new Dinosaur
             {
                 Id = 2,
+                Name = "Fred",
                 Species = new Species(FoodType.Herbivore, SpeciesType.Triceratops)
             }
         };
@@ -111,6 +131,7 @@ public class CageRulesTests
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
+            Name = "Fred",
             Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
@@ -122,13 +143,14 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsDinoValidForCage_When_CageHasExistingCarnivore_NewIsSameSpeciesAsExisting_WillPass()
+    public void AssertDinoValidForCage_When_CageHasExistingCarnivore_NewIsSameSpeciesAsExisting_WillPass()
     {
         var dinosaurs = new List<IDinosaur>
         {
             new Dinosaur
             {
                 Id = 2,
+                Name = "Fred",
                 Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
             }
         };
@@ -136,6 +158,7 @@ public class CageRulesTests
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
+            Name = "Fred",
             Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
@@ -145,13 +168,14 @@ public class CageRulesTests
     }
 
     [Test]
-    public void IsDinoValidForCage_When_CageHasExistingCarnivore_NewIsDifferentSpeciesAsExisting_WillFail()
+    public void AssertDinoValidForCage_When_CageHasExistingCarnivore_NewIsDifferentSpeciesAsExisting_WillFail()
     {
         var dinosaurs = new List<IDinosaur>
         {
             new Dinosaur
             {
                 Id = 2,
+                Name = "Fred",
                 Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
             }
         };
@@ -159,6 +183,7 @@ public class CageRulesTests
         var dinoUnderTest = new Dinosaur
         {
             Id = 1,
+            Name = "Fred",
             Species = new Species(FoodType.Carnivore, SpeciesType.Velociraptor)
         };
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
