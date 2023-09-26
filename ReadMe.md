@@ -8,10 +8,10 @@
 ## Business Rules
 
 ## Cages
-* [ ] Pull List of Cages [API](./docs/APINotes.md#get-all-cages)
-* [ ] Pull Cage by Id [API](./docs/APINotes.md#get-single-cage)
-* [ ] Create new Cage
-* [ ] Update existing Cage
+* [x] Pull List of Cages [API](./docs/APINotes.md#get-all-cages)
+* [x] Pull Cage by Id [API](./docs/APINotes.md#get-single-cage)
+* [x] Create new Cage [API](./docs/APINotes.md#create-cage)
+* [x] Update existing Cage [API](./docs/APINotes.md#edit-cage)
 
 ## Details
 * All requests should respond with the correct HTTP status codes and a response, if necessary,

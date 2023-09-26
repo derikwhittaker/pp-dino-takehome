@@ -166,11 +166,11 @@ public class InMemoryDB : IDatabase
     {
         _cages = new List<ICage>
         {
-            new Cage
+            new Cage(_dinosaurs.Take(2).ToList())
             {
                 Id = 1,
                 PowerStatus = PowerStatusType.Active,
-                Capacity = 1
+                Capacity = 1,
             },
             new Cage
             {

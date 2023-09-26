@@ -87,7 +87,7 @@ public class CagesController : ControllerBase
         }
         catch (KeyNotFoundException knfException)
         {
-            _logger.LogError(knfException.Message);        
+            _logger.LogError(knfException.Message);
             return NotFound($"No Cage found for provided key {cage.Id}");
         }
         catch (InvalidOperationException ioException)
@@ -111,8 +111,9 @@ public class CagesController : ControllerBase
         {
             await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Down);
         }
-        catch (InvalidOperationException ioExcetion)
+        catch (InvalidOperationException ioException)
         {
+            _logger.LogError(ioException.Message);
             return BadRequest("Cannot power down Cage as it would be put in an invalid state");
         }
 

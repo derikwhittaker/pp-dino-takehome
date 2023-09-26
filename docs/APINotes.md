@@ -13,7 +13,8 @@ Each of the routes are below.  There is a postman collection in this project, ea
 ### Edit Cage
 * Verb: PUT
 * Route: /api/cages/{cageId}
-* Status: Scaffoleded
+* Postman Collection: `Cages - Update`
+* Status: Completed
 
 ## Get All Cages
 * Verb: GET
