@@ -6,11 +6,13 @@ namespace PrizePicks.API.Rules;
 
 public interface ICageRules
 {
-    void IsCageAtCapacity(ICage cage);
+    public void AssertCageNotAtCapacity(ICage cage);
 
-    void IsDinoValidForCage(ICage cage, IDinosaur dinosaur);
+    public void AssertDinoValidForCage(ICage cage, IDinosaur dinosaur);
 
-    void IsPoweredOn(ICage cage);
+    public void AssertCageIsPoweredOn(ICage cage);
+
+    public bool IsAbleToBePoweredDown(ICage cage);
 }
 
 /// <summary>
@@ -34,7 +36,7 @@ public class CageRules : ICageRules
     /// </summary>
     /// <param name="cage"></param>
     /// <exception cref="CagePowerExceptionException"></exception>
-    public void IsCageAtCapacity(ICage cage)
+    public void AssertCageNotAtCapacity(ICage cage)
     {
         if (cage.Capacity == cage.Dinosaurs.Count())
         {
@@ -50,15 +52,38 @@ public class CageRules : ICageRules
     /// </summary>
     /// <param name="cage"></param>
     /// <exception cref="CagePowerExceptionException"></exception>
-    public void IsPoweredOn(ICage cage)
+    public void AssertCageIsPoweredOn(ICage cage)
     {
         if (cage.PowerStatus != PowerStatusType.Active)
         {
             _logger.LogDebug($"Unable to use Cage {cage.Id} as it is not powered on");
             throw new InvalidOperationException(
-                $"Cage {cage.Id} cannot be used as it is powered on"
+                $"Cage {cage.Id} cannot be used as it is not powered on"
             );
         }
+    }
+
+    /// <summary>
+    /// There are rules around when a cage can be powered down.
+    /// If there are any dinosaurs in the cage, it cannot be powered down.
+    /// </summary>
+    /// <param name="cage"></param>
+    public bool IsAbleToBePoweredDown(ICage cage)
+    {
+        _logger.LogInformation($"Checking to see if Cage {cage.Id} is able to be powered down");
+
+        // If the cage is already powered down, we can leave now
+        if (cage.PowerStatus == PowerStatusType.Down)
+        {
+            return true;
+        }
+
+        if (cage.Dinosaurs.Count() > 0)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -70,7 +95,7 @@ public class CageRules : ICageRules
     /// </summary>
     /// <param name="cage"></param>
     /// <param name="dinosaur"></param>
-    public void IsDinoValidForCage(ICage cage, IDinosaur dinosaur)
+    public void AssertDinoValidForCage(ICage cage, IDinosaur dinosaur)
     {
         // If the cage is empty, we can exit now as we know we are good
         if (cage.Dinosaurs.Count() == 0)

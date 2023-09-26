@@ -18,15 +18,19 @@ public class InMemoryDBTests
     }
 
     [Test]
-    public void Seed_WillBuildDataCorrectly()
+    public async Task Seed_WillBuildDataCorrectly()
     {
         var expectedSpeciesCount = 8;
         var expectedDinosoaurCount = 9;
         var expectedCageCount = 2;
 
-        Assert.True(_inMemoryDB.Species().Count() == expectedSpeciesCount);
-        Assert.True(_inMemoryDB.Dinosaurs().Count() == expectedDinosoaurCount);
-        Assert.True(_inMemoryDB.Cages().Count() == expectedCageCount);
+        var species = _inMemoryDB.Species();
+        var dinosaurs = _inMemoryDB.Dinosaurs();
+        var cages = await _inMemoryDB.CagesAsync();
+
+        Assert.True(species.Count() == expectedSpeciesCount);
+        Assert.True(dinosaurs.Count() == expectedDinosoaurCount);
+        Assert.True(cages.Count() == expectedCageCount);
     }
 
     [Test]
@@ -36,50 +40,58 @@ public class InMemoryDBTests
     }
 
     [Test]
-    public void Cages_Remove_WhenValidIdProvided_WillRemoveFromList()
+    public async Task Cages_Remove_WhenValidIdProvided_WillRemoveFromList()
     {
         var cageToRemove = new Cage { Id = 2 };
-        var expectedFinalCageCount = _inMemoryDB.Cages().Count() - 1;
+        var cages = await _inMemoryDB.CagesAsync();
+        var expectedFinalCageCount = cages.Count() - 1;
 
         _inMemoryDB.Remove(cageToRemove);
 
-        Assert.True(_inMemoryDB.Cages().Count() == expectedFinalCageCount);
+        var updatedCages = await _inMemoryDB.CagesAsync();
+        Assert.True(updatedCages.Count() == expectedFinalCageCount);
     }
 
     [Test]
-    public void Cages_Remove_WhenInValidIdProvided_WillNotRemoveFromList()
+    public async Task Cages_Remove_WhenInValidIdProvided_WillNotRemoveFromList()
     {
         var cageToRemove = new Cage { Id = 222 };
-        var expectedFinalCageCount = _inMemoryDB.Cages().Count();
+        var cages = await _inMemoryDB.CagesAsync();
+        var expectedFinalCageCount = cages.Count();
 
         _inMemoryDB.Remove(cageToRemove);
 
-        Assert.True(_inMemoryDB.Cages().Count() == expectedFinalCageCount);
+        var updatedCages = await _inMemoryDB.CagesAsync();
+        Assert.True(updatedCages.Count() == expectedFinalCageCount);
     }
 
     [Test]
-    public void Cages_Update_WhenExistingItemFound_WillReplaceWithNewInstance()
+    public async Task Cages_Update_WhenExistingItemFound_WillReplaceWithNewInstance()
     {
-        var cageToUpdate = _inMemoryDB.Cages().Where(x => x.Id == 2).First();
+        var cages = await _inMemoryDB.CagesAsync();
+        var cageToUpdate = cages.Where(x => x.Id == 2).First();
 
         cageToUpdate.Capacity = 2;
 
         _inMemoryDB.Update(cageToUpdate);
 
-        var cageUpdated = _inMemoryDB.Cages().Where(x => x.Id == 2).First();
+        var updatedCages = await _inMemoryDB.CagesAsync();
+        var cageUpdated = updatedCages.Where(x => x.Id == 2).First();
 
         Assert.True(cageToUpdate.Capacity == 2);
     }
 
     [Test]
-    public void Cages_Update_WhenExistingIsNotItemFound_WillAddNewInstance()
+    public async Task Cages_Update_WhenExistingIsNotItemFound_WillAddNewInstance()
     {
         var cageToUpdate = new Cage { Id = 4, Capacity = 2 };
-        var expectedNewCagesCount = _inMemoryDB.Cages().Count() + 1;
+        var cages = await _inMemoryDB.CagesAsync();
+        var expectedNewCagesCount = cages.Count() + 1;
 
         _inMemoryDB.Update(cageToUpdate);
 
-        var newCagesCount = _inMemoryDB.Cages().Count();
+        var updatedCages = await _inMemoryDB.CagesAsync();
+        var newCagesCount = updatedCages.Count();
 
         Assert.True(
             newCagesCount == expectedNewCagesCount,

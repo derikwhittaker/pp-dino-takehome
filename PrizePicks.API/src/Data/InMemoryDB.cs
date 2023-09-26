@@ -8,7 +8,7 @@ public class InMemoryDB : IDatabase
     private static IList<IDinosaur> _dinosaurs { get; set; }
     private static IList<ISpecies> _species { get; set; }
 
-    public IEnumerable<ICage> Cages()
+    public async Task<IEnumerable<ICage>> CagesAsync()
     {
         return _cages;
     }

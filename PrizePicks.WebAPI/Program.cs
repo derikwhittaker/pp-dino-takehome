@@ -1,4 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
+var autoFacBuilder = new ContainerBuilder();
 
 // Add services to the container.
 
@@ -7,6 +11,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// autoFacBuilder.Populate(builder.Services);
+
+builder.Host
+    .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(builder =>
+    {
+        builder.RegisterModule(new PrizePicks.API.Registration());
+    });
 
 var app = builder.Build();
 
@@ -24,6 +37,14 @@ app.UseAuthorization();
 app.MapControllers();
 
 // need to seed the db
-PrizePicks.API.Data.Database.Seed();
+PrizePicks.API.Data.InMemoryDB.Seed();
 
 app.Run();
+
+// static void ConfigureLogging(ContainerBuilder builder)
+// {
+//     var seriLogger = new LoggerConfiguration();
+//     seriLogger.WriteTo.Console().MinimumLevel.Verbose();
+
+//     builder.RegisterSerilog(seriLogger);
+// }

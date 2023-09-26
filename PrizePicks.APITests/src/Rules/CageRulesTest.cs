@@ -22,7 +22,7 @@ public class CageRulesTests
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, Capacity = 2 };
 
         // throws an exception if something is wrong, so we can just call
-        _cageRules.IsCageAtCapacity(cageUnderTest);
+        _cageRules.AssertCageNotAtCapacity(cageUnderTest);
     }
 
     [Test]
@@ -33,7 +33,9 @@ public class CageRulesTests
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, Capacity = 1 };
 
         // throws an exception if something is wrong
-        Assert.Throws<InvalidOperationException>(() => _cageRules.IsCageAtCapacity(cageUnderTest));
+        Assert.Throws<InvalidOperationException>(
+            () => _cageRules.AssertCageNotAtCapacity(cageUnderTest)
+        );
     }
 
     [Test]
@@ -42,7 +44,7 @@ public class CageRulesTests
         var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
-        _cageRules.IsPoweredOn(cageUnderTest);
+        _cageRules.AssertCageIsPoweredOn(cageUnderTest);
     }
 
     [Test]
@@ -51,7 +53,9 @@ public class CageRulesTests
         var cageUnderTest = new Cage { Id = 1, PowerStatus = PowerStatusType.Down };
 
         // throws an exception if something is wrong
-        Assert.Throws<InvalidOperationException>(() => _cageRules.IsPoweredOn(cageUnderTest));
+        Assert.Throws<InvalidOperationException>(
+            () => _cageRules.AssertCageIsPoweredOn(cageUnderTest)
+        );
     }
 
     [Test]
@@ -66,7 +70,7 @@ public class CageRulesTests
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
-        _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest);
+        _cageRules.AssertDinoValidForCage(cageUnderTest, dinoUnderTest);
     }
 
     [Test]
@@ -89,7 +93,7 @@ public class CageRulesTests
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
-        _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest);
+        _cageRules.AssertDinoValidForCage(cageUnderTest, dinoUnderTest);
     }
 
     [Test]
@@ -113,7 +117,7 @@ public class CageRulesTests
 
         // throws an exception if something is wrong, so we can just call
         Assert.Throws<InvalidOperationException>(
-            () => _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest)
+            () => _cageRules.AssertDinoValidForCage(cageUnderTest, dinoUnderTest)
         );
     }
 
@@ -137,7 +141,7 @@ public class CageRulesTests
         var cageUnderTest = new Cage(dinosaurs) { Id = 1, PowerStatus = PowerStatusType.Active };
 
         // throws an exception if something is wrong, so we can just call
-        _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest);
+        _cageRules.AssertDinoValidForCage(cageUnderTest, dinoUnderTest);
     }
 
     [Test]
@@ -161,7 +165,7 @@ public class CageRulesTests
 
         // throws an exception if something is wrong, so we can just call
         Assert.Throws<InvalidOperationException>(
-            () => _cageRules.IsDinoValidForCage(cageUnderTest, dinoUnderTest)
+            () => _cageRules.AssertDinoValidForCage(cageUnderTest, dinoUnderTest)
         );
     }
 }

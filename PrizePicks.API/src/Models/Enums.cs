@@ -19,6 +19,7 @@ public enum SpeciesType
     Triceratops = 54
 }
 
+[Flags]
 public enum PowerStatusType
 {
     Active = 1,

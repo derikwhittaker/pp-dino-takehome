@@ -4,7 +4,7 @@ namespace PrizePicks.API.Data;
 
 public interface IDatabase
 {
-    public IEnumerable<ICage> Cages();
+    public Task<IEnumerable<ICage>> CagesAsync();
     public void Remove(ICage instance);
     public void Update(ICage instance);
 

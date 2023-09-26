@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using PrizePicks.API.Models;
+using PrizePicks.API.Services;
 
 namespace PrizePicks.WebAPI.Controllers;
 
@@ -11,36 +12,63 @@ namespace PrizePicks.WebAPI.Controllers;
 public class CagesController : ControllerBase
 {
     private readonly ILogger<CagesController> _logger;
+    private readonly ICageService _cageService;
 
-    public CagesController(ILogger<CagesController> logger)
+    public CagesController(ILogger<CagesController> logger, ICageService cageService)
     {
         _logger = logger;
+        _cageService = cageService;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
     public async Task<ActionResult<IEnumerable<ICage>>> GetAllAsync()
     {
-        _logger.LogInformation($"Attempting to get all Cages");
-        return Enumerable.Range(1, 5).Select(index => new Cage()).ToArray();
+        _logger.LogInformation($"Attempting to get all Cages from repo");
+        var cages = await _cageService.CagesAsync();
+
+        return Ok(cages);
     }
 
     [HttpGet]
     [Route("{cageId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ICage>> GetSingleAsync(int cageId)
     {
         _logger.LogInformation($"Attempting to Cages for id {cageId}");
-        return new Cage { Id = cageId };
+
+        try
+        {
+            var cage = await _cageService.CageAsync(cageId);
+
+            return Ok(cage);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            _logger.LogError(knfException.Message);
+            return NotFound($"No Cage found for provided key {cageId}");
+        }
     }
 
-    // [Route()]
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
-    public async Task<ActionResult<ICage>> CreateAsync()
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Cage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Cage>> CreateAsync(Cage cage)
     {
         _logger.LogInformation("Attempting to create a new Cages");
-        return new Cage { Id = 99 };
+
+        try
+        {
+            var updatedCage = await _cageService.Create(cage);
+
+            return Ok(updatedCage);
+        }
+        catch (InvalidOperationException ioException)
+        {
+            _logger.LogError(ioException.Message);
+            return BadRequest($"Cage canot be created unless it is powered on");
+        }
     }
 
     [HttpPut]
@@ -54,9 +82,20 @@ public class CagesController : ControllerBase
     [HttpPut]
     [Route("{cageId}/powerdown")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ICage>> PowerDownAsync(int cageId)
     {
         _logger.LogInformation($"Attempting to powerdown Cage with id {cageId}");
+
+        try
+        {
+            await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Down);
+        }
+        catch (InvalidOperationException ioExcetion)
+        {
+            return BadRequest("Cannot power down Cage as it would be put in an invalid state");
+        }
+
         return new Cage { Id = cageId };
     }
 
