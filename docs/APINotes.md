@@ -31,12 +31,14 @@ Each of the routes are below.  There is a postman collection in this project, ea
 ## Power Down
 * Verb: PUT
 * Route: /api/cages/{cageId}/powerdown
-* Status: Scaffoleded
+* Postman Collection: `Cages - Powerdown - Single`
+* Status: Completed
 
 ## Power On
 * Verb: PUT
 * Route: /api/cages/{cageId}/poweron
-* Status: Scaffoleded
+* Postman Collection: `Cages - Powerup - Single`
+* Status: Completed
 
 ## Dinosaurs
 ### Create

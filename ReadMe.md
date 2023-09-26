@@ -12,6 +12,8 @@
 * [x] Pull Cage by Id [API](./docs/APINotes.md#get-single-cage)
 * [x] Create new Cage [API](./docs/APINotes.md#create-cage)
 * [x] Update existing Cage [API](./docs/APINotes.md#edit-cage)
+* [x] Powerdown a Cage [API](./docs/APINotes.md#power-down)
+* [x] Powerup a Cage [API](./docs/APINotes.md#power-on)
 
 ## Details
 * All requests should respond with the correct HTTP status codes and a response, if necessary,

@@ -109,23 +109,35 @@ public class CagesController : ControllerBase
 
         try
         {
-            await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Down);
+            var updatedCage = await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Down);
+
+            return Ok(updatedCage);
         }
         catch (InvalidOperationException ioException)
         {
             _logger.LogError(ioException.Message);
             return BadRequest("Cannot power down Cage as it would be put in an invalid state");
         }
-
-        return new Cage { Id = cageId };
     }
 
     [HttpPut]
     [Route("{cageId}/powerup")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ICage>> PowerUpAsync(int cageId)
     {
         _logger.LogInformation($"Attempting to powerup Cage with id {cageId}");
-        return new Cage { Id = cageId };
+
+        try
+        {
+            var updatedCage = await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Active);
+
+            return Ok(updatedCage);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            _logger.LogError(knfException.Message);
+            return NotFound("Cannot power up Cage that does not exist");
+        }
     }
 }
