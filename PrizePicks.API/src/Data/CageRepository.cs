@@ -9,7 +9,7 @@ public interface ICageRepository
 
     public Task<ICage> CageAsync(int cageId);
 
-    public Task<ICage> Update(ICage cage);
+    public Task<ICage> UpdateAsync(ICage cage);
 }
 
 public class CageRepository : ICageRepository
@@ -24,11 +24,23 @@ public class CageRepository : ICageRepository
         _database = database;
     }
 
+    /// <summary>
+    /// Will pull all dinos
+    /// </summary>
+    /// <returns>List of all dinosaurs</returns>
     public async Task<IEnumerable<ICage>> CagesAsync()
     {
         return await _database.CagesAsync();
     }
 
+    /// <summary>
+    /// Will pull a given cage by its id.
+    ///
+    /// If the cage is not found, will throw exception
+    /// </summary>
+    /// <param name="cageId"></param>
+    /// <returns></returns>
+    /// <exception cref="KeyNotFoundException">Thrown if the provided Id was not valid</exception>
     public async Task<ICage> CageAsync(int cageId)
     {
         var cages = await _database.CagesAsync();
@@ -48,18 +60,18 @@ public class CageRepository : ICageRepository
     /// </summary>
     /// <param name="cage"></param>
     /// <returns></returns>
-    public async Task<ICage> Update(ICage cage)
+    public async Task<ICage> UpdateAsync(ICage cage)
     {
         _logger.LogInformation($"Attempting to assocaite new dinosaur to Cage {cage.Id}");
+        var cages = await _database.CagesAsync();
 
         // mimic db setting the key
         if (cage.Id <= 0)
         {
-            cage.Id = new Random().Next(100);
+            cage.Id = cages.Count() + 1;
         }
         else
         {
-            var cages = await _database.CagesAsync();
             if (!cages.Any(x => x.Id == cage.Id))
             {
                 throw new KeyNotFoundException($"Unable to find Cage w/ id {cage.Id}");
@@ -67,7 +79,7 @@ public class CageRepository : ICageRepository
         }
 
         // because we are not using sql, this is bit more work.
-        _database.Update(cage);
+        _database.UpdateAsync(cage);
 
         return cage;
     }

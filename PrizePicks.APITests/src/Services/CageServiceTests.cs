@@ -60,7 +60,7 @@ public class CageServiceTests
         //  we want to validat the the provided ino was added correctly
         ICage passedCage = new Cage();
         _cageRepositoryMock
-            .Setup(x => x.Update(It.IsAny<ICage>()))
+            .Setup(x => x.UpdateAsync(It.IsAny<ICage>()))
             .Callback(new InvocationAction(i => passedCage = (ICage)i.Arguments[0]));
 
         await _cageService.AssociateDinosaurAsync(cageIdUnderTest, dinoIdUnderTest);
@@ -124,7 +124,7 @@ public class CageServiceTests
         //  we want to validat the the provided ino was added correctly
         ICage passedCage = new Cage();
         _cageRepositoryMock
-            .Setup(x => x.Update(It.IsAny<ICage>()))
+            .Setup(x => x.UpdateAsync(It.IsAny<ICage>()))
             .Callback(new InvocationAction(i => passedCage = (ICage)i.Arguments[0]));
 
         Assert.ThrowsAsync<KeyNotFoundException>(
@@ -158,7 +158,7 @@ public class CageServiceTests
         //  we want to validat the the provided ino was added correctly
         ICage passedCage = new Cage();
         _cageRepositoryMock
-            .Setup(x => x.Update(It.IsAny<ICage>()))
+            .Setup(x => x.UpdateAsync(It.IsAny<ICage>()))
             .Callback(new InvocationAction(i => passedCage = (ICage)i.Arguments[0]));
 
         Assert.ThrowsAsync<InvalidOperationException>(
@@ -213,7 +213,7 @@ public class CageServiceTests
 
         await _cageService.Create(cage);
 
-        _cageRepositoryMock.Verify(x => x.Update(cage), Times.Once());
+        _cageRepositoryMock.Verify(x => x.UpdateAsync(cage), Times.Once());
     }
 
     [Test]
@@ -233,7 +233,7 @@ public class CageServiceTests
         catch
         {
             // kinda cheating the system, but we want to validate the update is NOT called
-            _cageRepositoryMock.Verify(x => x.Update(cage), Times.Never());
+            _cageRepositoryMock.Verify(x => x.UpdateAsync(cage), Times.Never());
         }
     }
 
@@ -285,7 +285,7 @@ public class CageServiceTests
 
         await _cageService.UpdateAsync(cage);
 
-        _cageRepositoryMock.Verify(x => x.Update(cage), Times.Once());
+        _cageRepositoryMock.Verify(x => x.UpdateAsync(cage), Times.Once());
     }
 
     [Test]
@@ -305,7 +305,7 @@ public class CageServiceTests
         catch
         {
             // kinda cheating the system, but we want to validate the update is NOT called
-            _cageRepositoryMock.Verify(x => x.Update(cage), Times.Never());
+            _cageRepositoryMock.Verify(x => x.UpdateAsync(cage), Times.Never());
         }
     }
 }

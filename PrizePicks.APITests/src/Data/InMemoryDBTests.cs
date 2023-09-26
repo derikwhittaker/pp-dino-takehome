@@ -36,7 +36,7 @@ public class InMemoryDBTests
     [Test]
     public void Cages_Remove_WhenInvalidIdProvided_WillThrowException()
     {
-        Assert.Throws<ArgumentException>(() => _inMemoryDB.Remove(new Cage()));
+        Assert.Throws<ArgumentException>(() => _inMemoryDB.RemoveAsync(new Cage()));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class InMemoryDBTests
         var cages = await _inMemoryDB.CagesAsync();
         var expectedFinalCageCount = cages.Count() - 1;
 
-        _inMemoryDB.Remove(cageToRemove);
+        _inMemoryDB.RemoveAsync(cageToRemove);
 
         var updatedCages = await _inMemoryDB.CagesAsync();
         Assert.True(updatedCages.Count() == expectedFinalCageCount);
@@ -59,7 +59,7 @@ public class InMemoryDBTests
         var cages = await _inMemoryDB.CagesAsync();
         var expectedFinalCageCount = cages.Count();
 
-        _inMemoryDB.Remove(cageToRemove);
+        _inMemoryDB.RemoveAsync(cageToRemove);
 
         var updatedCages = await _inMemoryDB.CagesAsync();
         Assert.True(updatedCages.Count() == expectedFinalCageCount);
@@ -73,7 +73,7 @@ public class InMemoryDBTests
 
         cageToUpdate.Capacity = 2;
 
-        _inMemoryDB.Update(cageToUpdate);
+        _inMemoryDB.UpdateAsync(cageToUpdate);
 
         var updatedCages = await _inMemoryDB.CagesAsync();
         var cageUpdated = updatedCages.Where(x => x.Id == 2).First();
@@ -88,7 +88,7 @@ public class InMemoryDBTests
         var cages = await _inMemoryDB.CagesAsync();
         var expectedNewCagesCount = cages.Count() + 1;
 
-        _inMemoryDB.Update(cageToUpdate);
+        _inMemoryDB.UpdateAsync(cageToUpdate);
 
         var updatedCages = await _inMemoryDB.CagesAsync();
         var newCagesCount = updatedCages.Count();
@@ -103,7 +103,7 @@ public class InMemoryDBTests
     public void Dinosaurs_Remove_WhenInvalidIdProvided_WillThrowException()
     {
         Assert.Throws<ArgumentException>(
-            () => _inMemoryDB.Remove(new Dinosaur { Name = "Fred", Species = new Species() })
+            () => _inMemoryDB.RemoveAsync(new Dinosaur { Name = "Fred", Species = new Species() })
         );
     }
 
@@ -120,7 +120,7 @@ public class InMemoryDBTests
         var updatedDinos = await _inMemoryDB.DinosaursAsync();
         var expectedFinalDinosaurCount = updatedDinos.Count() - 1;
 
-        _inMemoryDB.Remove(cageToRemove);
+        _inMemoryDB.RemoveAsync(cageToRemove);
 
         var finalDinos = await _inMemoryDB.DinosaursAsync();
         Assert.True(finalDinos.Count() == expectedFinalDinosaurCount);
@@ -138,7 +138,7 @@ public class InMemoryDBTests
         var updatedDinos = await _inMemoryDB.DinosaursAsync();
         var expectedFinalDinosaurCount = updatedDinos.Count();
 
-        _inMemoryDB.Remove(cageToRemove);
+        _inMemoryDB.RemoveAsync(cageToRemove);
 
         var finalDinos = await _inMemoryDB.DinosaursAsync();
         Assert.True(finalDinos.Count() == expectedFinalDinosaurCount);
@@ -152,7 +152,7 @@ public class InMemoryDBTests
 
         dinosaurToUpdate.Name = "Test Name";
 
-        _inMemoryDB.Update(dinosaurToUpdate);
+        _inMemoryDB.UpdateAsync(dinosaurToUpdate);
 
         var finalDinos = await _inMemoryDB.DinosaursAsync();
         var cageUpdated = finalDinos.Where(x => x.Id == 2).First();
@@ -172,7 +172,7 @@ public class InMemoryDBTests
         var dinos = await _inMemoryDB.DinosaursAsync();
         var expectedNewDionsaurCount = dinos.Count() + 1;
 
-        _inMemoryDB.Update(dinosuarToUpdate);
+        _inMemoryDB.UpdateAsync(dinosuarToUpdate);
 
         var finalDinos = await _inMemoryDB.DinosaursAsync();
         var newDinosaurCount = finalDinos.Count();

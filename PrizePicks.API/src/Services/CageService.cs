@@ -78,7 +78,7 @@ public class CageService : ICageService
         // canot create a cage that is not powered on
         _cageRules.AssertCageIsPoweredOn(cage);
 
-        await _cageRepository.Update(cage);
+        await _cageRepository.UpdateAsync(cage);
 
         return cage;
     }
@@ -95,7 +95,7 @@ public class CageService : ICageService
 
         _cageRules.AssertCageIsPoweredOn(cage);
 
-        await _cageRepository.Update(cage);
+        await _cageRepository.UpdateAsync(cage);
 
         return cage;
     }
@@ -121,7 +121,7 @@ public class CageService : ICageService
         cage.AssociateDinosaur(dinosaur);
 
         // We have valid info/rules, time to take action
-        await _cageRepository.Update(cage);
+        await _cageRepository.UpdateAsync(cage);
 
         return cage;
     }
@@ -139,7 +139,7 @@ public class CageService : ICageService
         }
 
         cageToUpdate.PowerStatus = powerStatus;
-        var updatedCage = await _cageRepository.Update(cageToUpdate);
+        var updatedCage = await _cageRepository.UpdateAsync(cageToUpdate);
 
         return updatedCage;
     }

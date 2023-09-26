@@ -13,7 +13,7 @@ public class InMemoryDB : IDatabase
         return _cages;
     }
 
-    public void Remove(ICage instance)
+    public void RemoveAsync(ICage instance)
     {
         if (instance.Id <= 0)
         {
@@ -34,14 +34,14 @@ public class InMemoryDB : IDatabase
     /// </summary>
     /// <param name="instance"></param>
     /// <exception cref="ArgumentException"></exception>
-    public void Update(ICage instance)
+    public void UpdateAsync(ICage instance)
     {
         if (instance.Id <= 0)
         {
             throw new ArgumentException("Instace must have valid Id", nameof(instance));
         }
 
-        Remove(instance);
+        RemoveAsync(instance);
 
         _cages.Add(instance);
     }
@@ -51,7 +51,7 @@ public class InMemoryDB : IDatabase
         return _dinosaurs;
     }
 
-    public void Remove(IDinosaur instance)
+    public void RemoveAsync(IDinosaur instance)
     {
         if (instance.Id <= 0)
         {
@@ -72,14 +72,14 @@ public class InMemoryDB : IDatabase
     /// </summary>
     /// <param name="instance"></param>
     /// <exception cref="ArgumentException"></exception>
-    public void Update(IDinosaur instance)
+    public void UpdateAsync(IDinosaur instance)
     {
         if (instance.Id <= 0)
         {
             throw new ArgumentException("Instace must have valid Id", nameof(instance));
         }
 
-        Remove(instance);
+        RemoveAsync(instance);
 
         _dinosaurs.Add(instance);
     }
