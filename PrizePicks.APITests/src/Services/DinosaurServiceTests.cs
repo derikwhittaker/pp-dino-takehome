@@ -13,6 +13,7 @@ public class DinosaurServiceTests
 {
     private Mock<ILogger<DinosaurService>> _loggerMock = new Mock<ILogger<DinosaurService>>();
     private Mock<IDinosaurRepository> _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
+    private Mock<IDinosaurRules> _dinosaurRulesMock = new Mock<IDinosaurRules>();
 
     private IDinosaurService _dinosaurService;
 
@@ -20,9 +21,13 @@ public class DinosaurServiceTests
     public void Setup()
     {
         _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
-        _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
+        _dinosaurRulesMock = new Mock<IDinosaurRules>();
 
-        _dinosaurService = new DinosaurService(_loggerMock.Object, _dinosaurRepositoryMock.Object);
+        _dinosaurService = new DinosaurService(
+            _loggerMock.Object,
+            _dinosaurRulesMock.Object,
+            _dinosaurRepositoryMock.Object
+        );
     }
 
     [Test]
@@ -53,5 +58,29 @@ public class DinosaurServiceTests
         var returnedDinosaurs = await _dinosaurService.DinosaurAsync(idUnderTest);
 
         _dinosaurRepositoryMock.Verify(x => x.DinosaurAsync(idUnderTest), Times.Once());
+    }
+
+    [Test]
+    public async Task CreateAsync_WhenNameIsNotProvided_WillThrowException()
+    {
+        _dinosaurRulesMock
+            .Setup(x => x.AssertDinosaurHasName(It.IsAny<IDinosaur>()))
+            .Throws<InvalidOperationException>();
+
+        var dinosaurUndertest = new Dinosaur { Name = "", Species = new Species() };
+
+        Assert.ThrowsAsync<InvalidOperationException>(
+            async () => await _dinosaurService.CreateAsync(dinosaurUndertest)
+        );
+    }
+
+    [Test]
+    public async Task CreateAsync_WhenAllIsValid_WillInvokeUpdate()
+    {
+        var dinosaurUndertest = new Dinosaur { Name = "", Species = new Species() };
+
+        await _dinosaurService.CreateAsync(dinosaurUndertest);
+
+        _dinosaurRepositoryMock.Verify(x => x.UpdateAsync(dinosaurUndertest), Times.Once());
     }
 }

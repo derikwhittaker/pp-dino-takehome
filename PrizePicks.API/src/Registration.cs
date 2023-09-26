@@ -15,6 +15,7 @@ public class Registration : Module
 
         // Rules
         builder.RegisterType<CageRules>().As<ICageRules>();
+        builder.RegisterType<DinosaurRules>().As<IDinosaurRules>();
 
         // Data Registration
         builder.RegisterType<CageRepository>().As<ICageRepository>();

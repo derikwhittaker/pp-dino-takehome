@@ -20,10 +20,16 @@ public class DinosaurService : IDinosaurService
 {
     private readonly ILogger<DinosaurService> _logger;
     private readonly IDinosaurRepository _dinosaurRepository;
+    private readonly IDinosaurRules _dinosaurRules;
 
-    public DinosaurService(ILogger<DinosaurService> logger, IDinosaurRepository dinosaurRepository)
+    public DinosaurService(
+        ILogger<DinosaurService> logger,
+        IDinosaurRules dinosaurRules,
+        IDinosaurRepository dinosaurRepository
+    )
     {
         _logger = logger;
+        _dinosaurRules = dinosaurRules;
         _dinosaurRepository = dinosaurRepository;
     }
 
@@ -66,10 +72,10 @@ public class DinosaurService : IDinosaurService
         _logger.LogInformation($"Attempting to create a new Dinosaur");
 
         // canot create a cage that is not powered on
-        // _dinosaurRules.AssertDinosaurHasName(dinosaur);
+        _dinosaurRules.AssertDinosaurHasName(dinosaur);
 
-        await _dinosaurRepository.UpdateAsync(dinosaur);
+        var updatedDinosaur = await _dinosaurRepository.UpdateAsync(dinosaur);
 
-        return dinosaur;
+        return updatedDinosaur;
     }
 }
