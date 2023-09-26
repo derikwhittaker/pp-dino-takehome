@@ -91,6 +91,8 @@ public class DinosaurService : IDinosaurService
     {
         _logger.LogInformation($"Attempting to update an existing dinosaur with Id {dinosaur.Id}");
 
+        _logger.LogDebug(JsonSerializer.Serialize(dinosaur));
+
         // canot create a dino that has no name, just not nice
         _dinosaurRules.AssertDinosaurHasName(dinosaur);
 

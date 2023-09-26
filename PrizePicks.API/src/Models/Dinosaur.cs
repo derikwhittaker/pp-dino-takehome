@@ -6,6 +6,7 @@ public interface IDinosaur
     public string Name { get; set; }
 
     public Species Species { get; set; }
+    FoodType Food { get; set; }
 }
 
 public class Dinosaur : IDinosaur
@@ -15,4 +16,6 @@ public class Dinosaur : IDinosaur
     public required string Name { get; set; }
 
     public required Species Species { get; set; }
+
+    public FoodType Food { get; set; } = FoodType.Herbivore;
 }

@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace PrizePicks.API.Models;
 
 public class Species
@@ -13,7 +15,9 @@ public class Species
         SpeciesType = species;
     }
 
+    // [JsonConverter(typeof(JsonStringEnumConverter))]
     public FoodType Food { get; private set; }
 
+    // [JsonConverter(typeof(JsonStringEnumConverter))]
     public SpeciesType SpeciesType { get; private set; }
 }

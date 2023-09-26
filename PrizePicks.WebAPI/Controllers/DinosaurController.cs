@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 using PrizePicks.API.Models;
 using PrizePicks.API.Services;
@@ -23,7 +24,7 @@ public class DinosaursController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dinosaur))]
     public async Task<ActionResult<IEnumerable<IDinosaur>>> GetAllAsync()
     {
         _logger.LogInformation($"Attempting to get all Dinosaurs from repo");
@@ -34,7 +35,7 @@ public class DinosaursController : ControllerBase
 
     [HttpGet]
     [Route("{dinosaurId}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dinosaur))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IDinosaur>> GetSingleAsync(int dinosaurId)
     {
@@ -77,6 +78,8 @@ public class DinosaursController : ControllerBase
     public async Task<ActionResult<IDinosaur>> Update(Dinosaur dinosaur)
     {
         _logger.LogInformation("Attempting to update an existing Dinosaur");
+
+        _logger.LogDebug(JsonSerializer.Serialize(dinosaur));
 
         try
         {
