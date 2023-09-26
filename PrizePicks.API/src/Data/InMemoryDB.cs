@@ -46,7 +46,7 @@ public class InMemoryDB : IDatabase
         _cages.Add(instance);
     }
 
-    public IEnumerable<IDinosaur> Dinosaurs()
+    public async Task<IEnumerable<IDinosaur>> DinosaursAsync()
     {
         return _dinosaurs;
     }
@@ -108,8 +108,8 @@ public class InMemoryDB : IDatabase
             new Dinosaur
             {
                 Id = 1,
-                Name = "Roary",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Triceratops)
+                Name = "T-Roary",
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
             },
             new Dinosaur
             {
@@ -158,6 +158,12 @@ public class InMemoryDB : IDatabase
                 Id = 9,
                 Name = "Toppie",
                 Species = _species.First(x => x.SpeciesType == SpeciesType.Triceratops)
+            },
+            new Dinosaur
+            {
+                Id = 10,
+                Name = "T-Short Arms",
+                Species = _species.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
             }
         };
     }
@@ -166,15 +172,31 @@ public class InMemoryDB : IDatabase
     {
         _cages = new List<ICage>
         {
-            new Cage(_dinosaurs.Take(2).ToList())
+            new Cage(
+                _dinosaurs
+                    .Where(x => x.Species.SpeciesType == SpeciesType.Tyrannosaurus)
+                    .Take(1)
+                    .ToList()
+            )
             {
                 Id = 1,
                 PowerStatus = PowerStatusType.Active,
-                Capacity = 1,
+                Capacity = 10,
             },
             new Cage
             {
                 Id = 2,
+                PowerStatus = PowerStatusType.Active,
+                Capacity = 1
+            },
+            new Cage(
+                _dinosaurs
+                    .Where(x => x.Species.SpeciesType == SpeciesType.Spinosaurus)
+                    .Take(1)
+                    .ToList()
+            )
+            {
+                Id = 3,
                 PowerStatus = PowerStatusType.Active,
                 Capacity = 1
             },

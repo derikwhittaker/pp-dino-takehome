@@ -1,4 +1,3 @@
-using System.Collections;
 using Microsoft.Extensions.Logging;
 using PrizePicks.API.Models;
 

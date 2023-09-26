@@ -1,4 +1,3 @@
-using System.Data;
 using Microsoft.Extensions.Logging;
 
 using Moq;
@@ -6,7 +5,6 @@ using Moq;
 using PrizePicks.API.Data;
 using PrizePicks.API.Models;
 using PrizePicks.API.Rules;
-using PrizePicks.API.Services;
 
 namespace PrizePicks.API.Services;
 
@@ -15,6 +13,7 @@ public class CageServiceTests
 {
     private Mock<ILogger<CageService>> _loggerMock = new Mock<ILogger<CageService>>();
     private Mock<ICageRepository> _cageRepositoryMock = new Mock<ICageRepository>();
+    private Mock<IDinosaurRepository> _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
     private Mock<ICageRules> _cageRulesMock = new Mock<ICageRules>();
 
     private ICageService _cageService;
@@ -23,26 +22,36 @@ public class CageServiceTests
     public void Setup()
     {
         _cageRepositoryMock = new Mock<ICageRepository>();
+        _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
         _cageRulesMock = new Mock<ICageRules>();
 
         _cageService = new CageService(
             _loggerMock.Object,
             _cageRulesMock.Object,
-            _cageRepositoryMock.Object
+            _cageRepositoryMock.Object,
+            _dinosaurRepositoryMock.Object
         );
     }
 
     [Test]
     public async Task AssociateDinosaurAsync_WhenAllRulesPass_WillAttmptDBUpdate()
     {
-        var cageUnderTest = new Cage();
+        int cageIdUnderTest = 1;
+        var cageUnderTest = new Cage { Id = cageIdUnderTest };
+        var dinoIdUnderTest = 1;
         var dinoUnderTest = new Dinosaur
         {
-            Id = 1,
+            Id = dinoIdUnderTest,
             Name = "Fred",
             Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
 
+        _cageRepositoryMock
+            .Setup(db => db.CageAsync(cageIdUnderTest).Result)
+            .Returns(cageUnderTest);
+        _dinosaurRepositoryMock
+            .Setup(db => db.DinosaurAsync(dinoIdUnderTest).Result)
+            .Returns(dinoUnderTest);
         _cageRulesMock.Setup(rule => rule.AssertCageIsPoweredOn(cageUnderTest));
         _cageRulesMock.Setup(rule => rule.AssertCageNotAtCapacity(cageUnderTest));
         _cageRulesMock.Setup(rule => rule.AssertDinoValidForCage(cageUnderTest, dinoUnderTest));
@@ -54,7 +63,7 @@ public class CageServiceTests
             .Setup(x => x.Update(It.IsAny<ICage>()))
             .Callback(new InvocationAction(i => passedCage = (ICage)i.Arguments[0]));
 
-        await _cageService.AssociateDinosaurAsync(cageUnderTest, dinoUnderTest);
+        await _cageService.AssociateDinosaurAsync(cageIdUnderTest, dinoIdUnderTest);
 
         Assert.True(passedCage.Dinosaurs.Count() == 1);
         Assert.True(passedCage.Dinosaurs.First().Id == dinoUnderTest.Id);
@@ -62,16 +71,83 @@ public class CageServiceTests
     }
 
     [Test]
-    public void AssociateDinosaurAsync_WhenAnyRuleFailes_WillThrowException()
+    public async Task AssociateDinosaurAsync_WhenValid_WillReturnUpdatedCage()
     {
-        var cageUnderTest = new Cage();
+        int cageIdUnderTest = 1;
+        var cageUnderTest = new Cage { Id = cageIdUnderTest };
+        var dinoIdUnderTest = 1;
         var dinoUnderTest = new Dinosaur
         {
-            Id = 1,
+            Id = dinoIdUnderTest,
             Name = "Fred",
             Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
         };
 
+        _cageRepositoryMock
+            .Setup(db => db.CageAsync(cageIdUnderTest).Result)
+            .Returns(cageUnderTest);
+        _dinosaurRepositoryMock
+            .Setup(db => db.DinosaurAsync(dinoIdUnderTest).Result)
+            .Returns(dinoUnderTest);
+        _cageRulesMock.Setup(rule => rule.AssertCageIsPoweredOn(cageUnderTest));
+        _cageRulesMock.Setup(rule => rule.AssertCageNotAtCapacity(cageUnderTest));
+        _cageRulesMock.Setup(rule => rule.AssertDinoValidForCage(cageUnderTest, dinoUnderTest));
+
+        var updatedCage = await _cageService.AssociateDinosaurAsync(
+            cageIdUnderTest,
+            dinoIdUnderTest
+        );
+
+        Assert.True(updatedCage.Dinosaurs.Count() == 1);
+        Assert.True(updatedCage.Dinosaurs.First().Id == dinoUnderTest.Id);
+        Assert.True(updatedCage.Dinosaurs.First().Name == dinoUnderTest.Name);
+    }
+
+    [Test]
+    public void AssociateDinosaurAsync_IdNotValid_WillThrowException()
+    {
+        int cageIdUnderTest = 1;
+        var cageUnderTest = new Cage { Id = cageIdUnderTest };
+        var dinoIdUnderTest = 1;
+        var dinoUnderTest = new Dinosaur
+        {
+            Id = dinoIdUnderTest,
+            Name = "Fred",
+            Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
+        };
+
+        _cageRepositoryMock
+            .Setup(db => db.CageAsync(cageIdUnderTest).Result)
+            .Throws<KeyNotFoundException>();
+
+        // Goal is to get the cage value that was pushed into the repo
+        //  we want to validat the the provided ino was added correctly
+        ICage passedCage = new Cage();
+        _cageRepositoryMock
+            .Setup(x => x.Update(It.IsAny<ICage>()))
+            .Callback(new InvocationAction(i => passedCage = (ICage)i.Arguments[0]));
+
+        Assert.ThrowsAsync<KeyNotFoundException>(
+            async () => await _cageService.AssociateDinosaurAsync(cageIdUnderTest, dinoIdUnderTest)
+        );
+    }
+
+    [Test]
+    public void AssociateDinosaurAsync_WhenAnyRuleFaile_WillThrowException()
+    {
+        int cageIdUnderTest = 1;
+        var cageUnderTest = new Cage { Id = cageIdUnderTest };
+        var dinoIdUnderTest = 1;
+        var dinoUnderTest = new Dinosaur
+        {
+            Id = dinoIdUnderTest,
+            Name = "Fred",
+            Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
+        };
+
+        _cageRepositoryMock
+            .Setup(db => db.CageAsync(cageIdUnderTest).Result)
+            .Returns(cageUnderTest);
         _cageRulesMock
             .Setup(rule => rule.AssertCageIsPoweredOn(cageUnderTest))
             .Throws<InvalidOperationException>();
@@ -86,7 +162,7 @@ public class CageServiceTests
             .Callback(new InvocationAction(i => passedCage = (ICage)i.Arguments[0]));
 
         Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await _cageService.AssociateDinosaurAsync(cageUnderTest, dinoUnderTest)
+            async () => await _cageService.AssociateDinosaurAsync(cageIdUnderTest, dinoIdUnderTest)
         );
     }
 
@@ -97,7 +173,8 @@ public class CageServiceTests
         var dinosaurs = new List<IDinosaur> { new Dinosaur() };
         var cage = new Cage(dinosaurs) { Id = idUnderTest, PowerStatus = PowerStatusType.Active };
 
-        // force cage repo to pull back the right cage for us
+        // force cage repo to pull back the right cage for us]]
+
         _cageRepositoryMock.Setup(x => x.CageAsync(It.IsAny<int>()).Result).Returns(cage);
         _cageRulesMock.Setup(x => x.IsAbleToBePoweredDown(It.IsAny<ICage>())).Returns(false);
 

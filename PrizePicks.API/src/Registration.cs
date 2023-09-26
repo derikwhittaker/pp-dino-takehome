@@ -17,6 +17,7 @@ public class Registration : Module
 
         // Data Registration
         builder.RegisterType<CageRepository>().As<ICageRepository>();
+        builder.RegisterType<DinosaurRepository>().As<IDinosaurRepository>();
         builder.RegisterType<InMemoryDB>().As<IDatabase>();
     }
 }

@@ -8,7 +8,7 @@ public interface IDatabase
     public void Remove(ICage instance);
     public void Update(ICage instance);
 
-    public IEnumerable<IDinosaur> Dinosaurs();
+    public Task<IEnumerable<IDinosaur>> DinosaursAsync();
     public void Remove(IDinosaur instance);
     public void Update(IDinosaur instance);
 }

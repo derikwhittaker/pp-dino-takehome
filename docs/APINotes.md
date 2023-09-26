@@ -40,6 +40,12 @@ Each of the routes are below.  There is a postman collection in this project, ea
 * Postman Collection: `Cages - Powerup - Single`
 * Status: Completed
 
+## Associate Dinosaur to Cage
+* Verb: PUT
+* Route: /api/cages/{cageId}/associatedinosaur/{dinosaurId}
+* Postman Collection: `Cages - Associate Dino - *`
+* Status: Completed
+
 ## Dinosaurs
 ### Create
 * Verb: POST

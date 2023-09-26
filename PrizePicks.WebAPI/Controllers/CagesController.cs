@@ -46,8 +46,7 @@ public class CagesController : ControllerBase
         }
         catch (KeyNotFoundException knfException)
         {
-            _logger.LogError(knfException.Message);
-            return NotFound($"No Cage found for provided key {cageId}");
+            return NotFound(knfException.Message);
         }
     }
 
@@ -66,8 +65,7 @@ public class CagesController : ControllerBase
         }
         catch (InvalidOperationException ioException)
         {
-            _logger.LogError(ioException.Message);
-            return BadRequest($"Cage canot be created unless it is powered on");
+            return BadRequest(ioException.Message);
         }
     }
 
@@ -87,15 +85,11 @@ public class CagesController : ControllerBase
         }
         catch (KeyNotFoundException knfException)
         {
-            _logger.LogError(knfException.Message);
-            return NotFound($"No Cage found for provided key {cage.Id}");
+            return NotFound(knfException.Message);
         }
         catch (InvalidOperationException ioException)
         {
-            _logger.LogError(ioException.Message);
-            return BadRequest(
-                $"Cage canot be updated unless it is powered on.  use /poweroff route to powerdown the cage"
-            );
+            return BadRequest(ioException.Message);
         }
     }
 
@@ -115,8 +109,7 @@ public class CagesController : ControllerBase
         }
         catch (InvalidOperationException ioException)
         {
-            _logger.LogError(ioException.Message);
-            return BadRequest("Cannot power down Cage as it would be put in an invalid state");
+            return BadRequest(ioException.Message);
         }
     }
 
@@ -136,8 +129,32 @@ public class CagesController : ControllerBase
         }
         catch (KeyNotFoundException knfException)
         {
-            _logger.LogError(knfException.Message);
-            return NotFound("Cannot power up Cage that does not exist");
+            return NotFound(knfException.Message);
+        }
+    }
+
+    [HttpPut]
+    [Route("{cageId}/associatedinosaur/{dinosaurId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ICage>> AssociateDinosaurAsync(int cageId, int dinosaurId)
+    {
+        _logger.LogInformation($"Attempting to associate Dino {dinosaurId} to Cage {cageId}");
+
+        try
+        {
+            var updatedCage = await _cageService.AssociateDinosaurAsync(cageId, dinosaurId);
+
+            return Ok(updatedCage);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            return NotFound(knfException.Message);
+        }
+        catch (InvalidOperationException ioException)
+        {
+            return BadRequest(ioException.Message);
         }
     }
 }

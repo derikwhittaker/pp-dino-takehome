@@ -25,7 +25,7 @@ public class InMemoryDBTests
         var expectedCageCount = 2;
 
         var species = _inMemoryDB.Species();
-        var dinosaurs = _inMemoryDB.Dinosaurs();
+        var dinosaurs = await _inMemoryDB.DinosaursAsync();
         var cages = await _inMemoryDB.CagesAsync();
 
         Assert.True(species.Count() == expectedSpeciesCount);
@@ -106,50 +106,60 @@ public class InMemoryDBTests
     }
 
     [Test]
-    public void Dinosaurs_Remove_WhenValidIdProvided_WillRemoveFromList()
+    public async Task Dinosaurs_Remove_WhenValidIdProvided_WillRemoveFromList()
     {
         var cageToRemove = new Dinosaur { Id = 2 };
-        var expectedFinalDinosaurCount = _inMemoryDB.Dinosaurs().Count() - 1;
+
+        var updatedDinos = await _inMemoryDB.DinosaursAsync();
+        var expectedFinalDinosaurCount = updatedDinos.Count() - 1;
 
         _inMemoryDB.Remove(cageToRemove);
 
-        Assert.True(_inMemoryDB.Dinosaurs().Count() == expectedFinalDinosaurCount);
+        var finalDinos = await _inMemoryDB.DinosaursAsync();
+        Assert.True(finalDinos.Count() == expectedFinalDinosaurCount);
     }
 
     [Test]
-    public void Dinosaurs_Remove_WhenInValidIdProvided_WillNotRemoveFromList()
+    public async Task Dinosaurs_Remove_WhenInValidIdProvided_WillNotRemoveFromList()
     {
         var cageToRemove = new Dinosaur { Id = 222 };
-        var expectedFinalDinosaurCount = _inMemoryDB.Dinosaurs().Count();
+        var updatedDinos = await _inMemoryDB.DinosaursAsync();
+        var expectedFinalDinosaurCount = updatedDinos.Count();
 
         _inMemoryDB.Remove(cageToRemove);
 
-        Assert.True(_inMemoryDB.Dinosaurs().Count() == expectedFinalDinosaurCount);
+        var finalDinos = await _inMemoryDB.DinosaursAsync();
+        Assert.True(finalDinos.Count() == expectedFinalDinosaurCount);
     }
 
     [Test]
-    public void Dinosaurs_Update_WhenExistingItemFound_WillReplaceWithNewInstance()
+    public async Task Dinosaurs_Update_WhenExistingItemFound_WillReplaceWithNewInstance()
     {
-        var dinosaurToUpdate = _inMemoryDB.Dinosaurs().Where(x => x.Id == 2).First();
+
+        var dinos = await _inMemoryDB.DinosaursAsync();
+        var dinosaurToUpdate = dinos.Where(x => x.Id == 2).First();
 
         dinosaurToUpdate.Name = "Test Name";
 
         _inMemoryDB.Update(dinosaurToUpdate);
 
-        var cageUpdated = _inMemoryDB.Dinosaurs().Where(x => x.Id == 2).First();
+        var finalDinos = await _inMemoryDB.DinosaursAsync();
+        var cageUpdated = finalDinos.Where(x => x.Id == 2).First();
 
         Assert.True(dinosaurToUpdate.Name == "Test Name");
     }
 
     [Test]
-    public void Dinosaurs_Update_WhenExistingIsNotItemFound_WillAddNewInstance()
+    public async Task Dinosaurs_Update_WhenExistingIsNotItemFound_WillAddNewInstance()
     {
         var dinosuarToUpdate = new Dinosaur { Id = 44, Name = "TestName" };
-        var expectedNewDionsaurCount = _inMemoryDB.Dinosaurs().Count() + 1;
+        var dinos = await _inMemoryDB.DinosaursAsync();
+        var expectedNewDionsaurCount = dinos.Count() + 1;
 
         _inMemoryDB.Update(dinosuarToUpdate);
 
-        var newDinosaurCount = _inMemoryDB.Dinosaurs().Count();
+        var finalDinos = await _inMemoryDB.DinosaursAsync();
+        var newDinosaurCount = finalDinos.Count();
 
         Assert.True(
             newDinosaurCount == expectedNewDionsaurCount,

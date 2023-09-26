@@ -3,7 +3,8 @@
 * [Business Rules](#business-rules)
 * [Implementation Decisions](#implentation-decisions)
 * [Developer Notes](./docs/DeveloperNotes.md)
-* [API/Route Notes](./docs//APINotes.md)
+* [API/Route Notes](./docs/APINotes.md)
+* [Testing with Postman](./docs/PostmanTesting.md)
 
 ## Business Rules
 
@@ -14,6 +15,7 @@
 * [x] Update existing Cage [API](./docs/APINotes.md#edit-cage)
 * [x] Powerdown a Cage [API](./docs/APINotes.md#power-down)
 * [x] Powerup a Cage [API](./docs/APINotes.md#power-on)
+* [x] Associate Dino to Cage [API](./docs/APINotes.md#associate-dinosaur-to-cage)
 
 ## Details
 * All requests should respond with the correct HTTP status codes and a response, if necessary,
