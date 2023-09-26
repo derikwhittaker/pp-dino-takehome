@@ -50,7 +50,7 @@ Each of the routes are below.  There is a postman collection in this project, ea
 * Verb: PUT
 * Route: /api/cages/{cageId}/unassociatedinosaur/{dinosaurId}
 * Postman Collection: `Cages - Unssociate Dino`
-* Status: Not tarted
+* Status: Completed
 
 ## Dinosaurs
 ### Create Dinosaur

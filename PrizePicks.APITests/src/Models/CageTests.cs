@@ -65,4 +65,32 @@ public class CageTests
         // validate that we 2 as the new item was not already found
         Assert.True(cage.Dinosaurs.Count() == 2);
     }
+
+    [Test]
+    public void UnassociateDinosaur_When_ExisingIsFound_WillRemoveFromList()
+    {
+        var initialDinosaurs = new List<IDinosaur>
+        {
+            new Dinosaur
+            {
+                Id = 1,
+                Name = "Fred",
+                Species = new Species()
+            }
+        };
+
+        var dinoToUnassociate = new Dinosaur
+        {
+            Id = 1,
+            Name = "Fred",
+            Species = new Species()
+        };
+
+        var cage = new Cage(initialDinosaurs);
+
+        cage.UnassociateDinosaur(dinoToUnassociate);
+
+        // validate that are empty
+        Assert.True(cage.Dinosaurs.Count() == 0);
+    }
 }

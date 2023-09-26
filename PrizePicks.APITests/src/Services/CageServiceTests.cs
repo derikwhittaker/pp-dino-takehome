@@ -167,6 +167,34 @@ public class CageServiceTests
     }
 
     [Test]
+    public async Task UnassociateDinosaurAsync_WhenValid_WillRemoveCage()
+    {
+        int cageIdUnderTest = 1;
+        var cageUnderTest = new Cage { Id = cageIdUnderTest };
+        var dinoIdUnderTest = 1;
+        var dinoUnderTest = new Dinosaur
+        {
+            Id = dinoIdUnderTest,
+            Name = "Fred",
+            Species = new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus)
+        };
+
+        _cageRepositoryMock
+            .Setup(db => db.CageAsync(cageIdUnderTest).Result)
+            .Returns(cageUnderTest);
+        _dinosaurRepositoryMock
+            .Setup(db => db.DinosaurAsync(dinoIdUnderTest).Result)
+            .Returns(dinoUnderTest);
+
+        var updatedCage = await _cageService.UnassociateDinosaurAsync(
+            cageIdUnderTest,
+            dinoIdUnderTest
+        );
+
+        Assert.True(updatedCage.Dinosaurs.Count() == 0);
+    }
+
+    [Test]
     public async Task UpdatePowerStatus_WhenPoweringDown_And_HasDinosaurs_WillThrowException()
     {
         var idUnderTest = 99;

@@ -10,6 +10,7 @@ public interface ICage
     public IEnumerable<IDinosaur> Dinosaurs { get; }
 
     public void AssociateDinosaur(IDinosaur dinosaur);
+    public void UnassociateDinosaur(IDinosaur dinosaur);
 }
 
 public class Cage : ICage
@@ -34,6 +35,17 @@ public class Cage : ICage
         }
 
         _dinosaurs.Add(dinosaur);
+    }
+
+    public void UnassociateDinosaur(IDinosaur dinosaur)
+    {
+        var existingDino = _dinosaurs.FirstOrDefault(x => x.Id == dinosaur.Id);
+
+        // If we find an existing, we are going to swap it out
+        if (existingDino != null)
+        {
+            _dinosaurs.Remove(existingDino);
+        }
     }
 
     public int Id { get; set; }

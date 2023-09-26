@@ -16,6 +16,8 @@ public interface ICageService
 
     public Task<ICage> AssociateDinosaurAsync(int cageId, int dinosaurId);
 
+    public Task<ICage> UnassociateDinosaurAsync(int cageId, int dinosaurId);
+
     Task<ICage> UpdatePowerStatusAsync(int cageId, PowerStatusType powerStatus);
 }
 
@@ -120,6 +122,24 @@ public class CageService : ICageService
         _cageRules.AssertDinoValidForCage(cage, dinosaur);
 
         cage.AssociateDinosaur(dinosaur);
+
+        // We have valid info/rules, time to take action
+        await _cageRepository.UpdateAsync(cage);
+
+        return cage;
+    }
+
+    public async Task<ICage> UnassociateDinosaurAsync(int cageId, int dinosaurId)
+    {
+        _logger.LogInformation(
+            $"Attempt remove Dino with ID {dinosaurId} from Cage with Id {cageId}"
+        );
+
+        // given the id, pull the latest dino
+        var cage = await _cageRepository.CageAsync(cageId);
+        var dinosaur = await _dinosaurRepository.DinosaurAsync(dinosaurId);
+
+        cage.UnassociateDinosaur(dinosaur);
 
         // We have valid info/rules, time to take action
         await _cageRepository.UpdateAsync(cage);

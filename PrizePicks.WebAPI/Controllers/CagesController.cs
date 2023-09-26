@@ -59,7 +59,7 @@ public class CagesController : ControllerBase
 
         try
         {
-            var updatedCage = await _cageService.Create(cage);
+            var updatedCage = await _cageService.CreatAsync(cage);
 
             return Ok(updatedCage);
         }
@@ -103,7 +103,10 @@ public class CagesController : ControllerBase
 
         try
         {
-            var updatedCage = await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Down);
+            var updatedCage = await _cageService.UpdatePowerStatusAsync(
+                cageId,
+                PowerStatusType.Down
+            );
 
             return Ok(updatedCage);
         }
@@ -123,7 +126,10 @@ public class CagesController : ControllerBase
 
         try
         {
-            var updatedCage = await _cageService.UpdatePowerStatus(cageId, PowerStatusType.Active);
+            var updatedCage = await _cageService.UpdatePowerStatusAsync(
+                cageId,
+                PowerStatusType.Active
+            );
 
             return Ok(updatedCage);
         }
@@ -145,6 +151,31 @@ public class CagesController : ControllerBase
         try
         {
             var updatedCage = await _cageService.AssociateDinosaurAsync(cageId, dinosaurId);
+
+            return Ok(updatedCage);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            return NotFound(knfException.Message);
+        }
+        catch (InvalidOperationException ioException)
+        {
+            return BadRequest(ioException.Message);
+        }
+    }
+
+    [HttpPut]
+    [Route("{cageId}/unassociatedinosaur/{dinosaurId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ICage>> UnassociateDinosaurAsync(int cageId, int dinosaurId)
+    {
+        _logger.LogInformation($"Attempting to unassociate Dino {dinosaurId} to Cage {cageId}");
+
+        try
+        {
+            var updatedCage = await _cageService.UnassociateDinosaurAsync(cageId, dinosaurId);
 
             return Ok(updatedCage);
         }

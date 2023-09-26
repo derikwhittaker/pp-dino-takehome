@@ -16,7 +16,7 @@
 * [x] Powerdown a Cage [API](./docs/APINotes.md#power-down)
 * [x] Powerup a Cage [API](./docs/APINotes.md#power-on)
 * [x] Associate Dino to Cage [API](./docs/APINotes.md#associate-dinosaur-to-cage)
-* [ ] Unassociate Dino to Cage [API]()
+* [x] Unassociate Dino to Cage [API](./docs/APINotes.md#unassociate-dinosaur-to-cage)
 
 
 ## Dinosaur

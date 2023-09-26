@@ -33,6 +33,13 @@ Notes: This provide valid Cage `3` and Dino `5` -- Cage defaults 1 dino and capa
 Expected Response: HTTP 400 Bad Request
 
 
+## Unassociate Dino to Cage Validation
+
+
+### Valid Cage Id
+Request: `Cages - Unassociate Dino - Valid`
+Notes: To test this, run the associate before you run this.
+Expected Response: HTTP 200
 
 
 
