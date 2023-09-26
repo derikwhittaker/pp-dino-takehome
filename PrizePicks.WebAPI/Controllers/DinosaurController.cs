@@ -73,8 +73,20 @@ public class DinosaursController : ControllerBase
 
     [HttpPut(Name = "Dinosaur")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IDinosaur>> Update(Dinosaur dinosaur)
     {
-        return dinosaur;
+        _logger.LogInformation("Attempting to update an existing Dinosaur");
+
+        try
+        {
+            var updatedDinosaur = await _dinosaurService.UpdateAsync(dinosaur);
+
+            return Ok(updatedDinosaur);
+        }
+        catch (InvalidOperationException ioException)
+        {
+            return BadRequest(ioException.Message);
+        }
     }
 }

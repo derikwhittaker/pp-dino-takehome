@@ -83,4 +83,29 @@ public class DinosaurServiceTests
 
         _dinosaurRepositoryMock.Verify(x => x.UpdateAsync(dinosaurUndertest), Times.Once());
     }
+
+
+    [Test]
+    public async Task UpdateAsync_WhenNameIsNotProvided_WillThrowException()
+    {
+        _dinosaurRulesMock
+            .Setup(x => x.AssertDinosaurHasName(It.IsAny<IDinosaur>()))
+            .Throws<InvalidOperationException>();
+
+        var dinosaurUndertest = new Dinosaur { Name = "", Species = new Species() };
+
+        Assert.ThrowsAsync<InvalidOperationException>(
+            async () => await _dinosaurService.UpdateAsync(dinosaurUndertest)
+        );
+    }
+
+    [Test]
+    public async Task UpdateAsync_WhenAllIsValid_WillInvokeUpdate()
+    {
+        var dinosaurUndertest = new Dinosaur { Name = "", Species = new Species() };
+
+        await _dinosaurService.UpdateAsync(dinosaurUndertest);
+
+        _dinosaurRepositoryMock.Verify(x => x.UpdateAsync(dinosaurUndertest), Times.Once());
+    }
 }

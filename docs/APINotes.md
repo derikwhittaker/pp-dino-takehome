@@ -46,23 +46,29 @@ Each of the routes are below.  There is a postman collection in this project, ea
 * Postman Collection: `Cages - Associate Dino - *`
 * Status: Completed
 
+## Unassociate Dinosaur to Cage
+* Verb: PUT
+* Route: /api/cages/{cageId}/unassociatedinosaur/{dinosaurId}
+* Postman Collection: `Cages - Unssociate Dino`
+* Status: Not tarted
+
 ## Dinosaurs
-### Create
+### Create Dinosaur
 * Verb: POST
 * Route: /api/dinosaurs
 * Status: Scaffoleded
 
-### Edit
+### Edit Dinosaur
 * Verb: PUT
 * Route: /api/dinosaurs
 * Status: Scaffoleded
 
-## Get All
+## Get All Dinosaurs
 * Verb: GET
 * Route: /api/dinosaurs
 * Status: Scaffoleded
 
-## Get Single
+## Get Single Dinosaur
 * Verb: GET
 * Route: /api/dinosaurs/{dinosaurId}
 * Status: Scaffoleded

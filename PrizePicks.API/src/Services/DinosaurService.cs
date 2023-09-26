@@ -14,6 +14,8 @@ public interface IDinosaurService
     Task<IDinosaur> DinosaurAsync(int dinosaurId);
 
     Task<IDinosaur> CreateAsync(IDinosaur dinosaur);
+
+    Task<IDinosaur> UpdateAsync(IDinosaur dinosaur);
 }
 
 public class DinosaurService : IDinosaurService
@@ -49,10 +51,10 @@ public class DinosaurService : IDinosaurService
     }
 
     /// <summary>
-    /// Will return a given a valid Dinosaur Id, will return the cage associated
+    /// Will return a given a valid Dinosaur Id, will return the Dinosaur associated
     /// </summary>
-    /// <param name="dinosaurId">Valid ID of a cage as an Int</param>
-    /// <returns>ICage</returns>
+    /// <param name="dinosaurId">Valid ID of a Dinosaur as an Int</param>
+    /// <returns>IDinosaur</returns>
     public async Task<IDinosaur> DinosaurAsync(int dinosaurId)
     {
         _logger.LogInformation($"Pulling Dinosaur with id {dinosaurId} via Dinosaur Service");
@@ -71,7 +73,25 @@ public class DinosaurService : IDinosaurService
     {
         _logger.LogInformation($"Attempting to create a new Dinosaur");
 
-        // canot create a cage that is not powered on
+        // canot create a dino that has no name, just not nice
+        _dinosaurRules.AssertDinosaurHasName(dinosaur);
+
+        var updatedDinosaur = await _dinosaurRepository.UpdateAsync(dinosaur);
+
+        return updatedDinosaur;
+    }
+
+    /// <summary>
+    /// Will attempt to update an existing dinosaur
+    /// Will return the newly updated dinosaur
+    /// </summary>
+    /// <param name="dinosaur"></param>
+    /// <returns>IDinosaur</returns>
+    public async Task<IDinosaur> UpdateAsync(IDinosaur dinosaur)
+    {
+        _logger.LogInformation($"Attempting to update an existing dinosaur with Id {dinosaur.Id}");
+
+        // canot create a dino that has no name, just not nice
         _dinosaurRules.AssertDinosaurHasName(dinosaur);
 
         var updatedDinosaur = await _dinosaurRepository.UpdateAsync(dinosaur);

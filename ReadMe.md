@@ -16,6 +16,14 @@
 * [x] Powerdown a Cage [API](./docs/APINotes.md#power-down)
 * [x] Powerup a Cage [API](./docs/APINotes.md#power-on)
 * [x] Associate Dino to Cage [API](./docs/APINotes.md#associate-dinosaur-to-cage)
+* [ ] Unassociate Dino to Cage [API]()
+
+
+## Dinosaur
+* [x] Pull list of Dinosaurs [API](./docs/APINotes.md#get-all-dinosaurs)
+* [x] Pull Dinosaurs by Id [API](./docs/APINotes.md#get-single-dinosaur)
+* [x] Create a new Dinosaur [API](./docs/APINotes.md#create-dinosaur)
+* [x] Update an exsting Dinosaur [API](./docs/APINotes.md#edit-dinosaur)
 
 ## Details
 * All requests should respond with the correct HTTP status codes and a response, if necessary,

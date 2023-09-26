@@ -31,3 +31,44 @@ Expected Response: HTTP 400 Bad Request
 Request: `Cages - Associate Dino - Fail - Cage at Capacity`
 Notes: This provide valid Cage `3` and Dino `5` -- Cage defaults 1 dino and capacity of 1
 Expected Response: HTTP 400 Bad Request
+
+
+
+
+
+## Dinosaur Actions
+
+### Pull all Dinosaurs
+Requrest: `Dinosaurs - Get - All`
+Notes: none
+Expected Response: HTTP 200
+
+### Pull Dinosaur by Id
+Requrest: `Dinosaurs - Get - Single`
+Notes: Will return requested dino
+Expected Response: HTTP 200
+
+### Pull Dinosaur by Id - Invalid Id
+Requrest: `Dinosaurs - Get - Single - Invalid Id`
+Notes: Will return requested dino
+Expected Response: HTTP 404 Not Found
+
+### Create Dinosaur - Valid
+Requrest: `Dinosaurs - Create`
+Notes: Will return new dino
+Expected Response: HTTP 200
+
+### Create Dinosaur - Invalid - Missing Name
+Requrest: `Dinosaurs - Create - Invalid - Missing Name`
+Notes: Will throw error
+Expected Response: HTTP 400 Bad Request
+
+### Update Dinosaur - Valid
+Requrest: `Dinosaurs - Updated`
+Notes: Will return updated Dino
+Expected Response: HTTP 200
+
+### Update Dinosaur - Invalid - Missing Name
+Requrest: `Dinosaurs - Updated - Invalid 0 Missing Name`
+Notes: Will throw error
+Expected Response: HTTP 400 Bad Request
