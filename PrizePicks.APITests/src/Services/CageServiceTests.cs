@@ -182,10 +182,10 @@ public class CageServiceTests
         _cageRulesMock.Setup(x => x.IsAbleToBePoweredDown(It.IsAny<ICage>())).Returns(false);
 
         // setup -> create the cage we want to work with
-        await _cageService.Create(cage);
+        await _cageService.CreatAsync(cage);
 
         Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await _cageService.UpdatePowerStatus(idUnderTest, PowerStatusType.Down)
+            async () => await _cageService.UpdatePowerStatusAsync(idUnderTest, PowerStatusType.Down)
         );
     }
 
@@ -200,9 +200,12 @@ public class CageServiceTests
         _cageRulesMock.Setup(x => x.IsAbleToBePoweredDown(It.IsAny<ICage>())).Returns(true);
 
         // setup -> create the cage we want to work with
-        await _cageService.Create(cage);
+        await _cageService.CreatAsync(cage);
 
-        var updatedCage = await _cageService.UpdatePowerStatus(idUnderTest, PowerStatusType.Down);
+        var updatedCage = await _cageService.UpdatePowerStatusAsync(
+            idUnderTest,
+            PowerStatusType.Down
+        );
     }
 
     [Test]
@@ -211,7 +214,7 @@ public class CageServiceTests
         var idUnderTest = 100;
         var cage = new Cage() { Id = idUnderTest, PowerStatus = PowerStatusType.Active };
 
-        await _cageService.Create(cage);
+        await _cageService.CreatAsync(cage);
 
         _cageRepositoryMock.Verify(x => x.UpdateAsync(cage), Times.Once());
     }
@@ -228,7 +231,7 @@ public class CageServiceTests
 
         try
         {
-            await _cageService.Create(cage);
+            await _cageService.CreatAsync(cage);
         }
         catch
         {

@@ -11,11 +11,12 @@ public interface ICageService
 {
     Task<IEnumerable<ICage>> CagesAsync();
     Task<ICage> CageAsync(int cageId);
-    Task<ICage> Create(ICage cage);
+    Task<ICage> CreatAsync(ICage cage);
     Task<ICage> UpdateAsync(ICage cage);
 
     public Task<ICage> AssociateDinosaurAsync(int cageId, int dinosaurId);
-    Task<ICage> UpdatePowerStatus(int cageId, PowerStatusType powerStatus);
+
+    Task<ICage> UpdatePowerStatusAsync(int cageId, PowerStatusType powerStatus);
 }
 
 public class CageService : ICageService
@@ -71,7 +72,7 @@ public class CageService : ICageService
     /// </summary>
     /// <param name="cage">Populated ICage</param>
     /// <returns>ICage</returns>
-    public async Task<ICage> Create(ICage cage)
+    public async Task<ICage> CreatAsync(ICage cage)
     {
         _logger.LogInformation($"Attempting to create a new Cage");
 
@@ -126,7 +127,7 @@ public class CageService : ICageService
         return cage;
     }
 
-    public async Task<ICage> UpdatePowerStatus(int cageId, PowerStatusType powerStatus)
+    public async Task<ICage> UpdatePowerStatusAsync(int cageId, PowerStatusType powerStatus)
     {
         // Pull the latest/greatest cage
         var cageToUpdate = await _cageRepository.CageAsync(cageId);
