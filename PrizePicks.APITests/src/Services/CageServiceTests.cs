@@ -137,6 +137,27 @@ public class CageServiceTests
     }
 
     [Test]
+    public async Task Create_WhenCageNotPoweredOn_WillNotInvokeUpdate()
+    {
+        var idUnderTest = 100;
+        var cage = new Cage() { Id = idUnderTest, PowerStatus = PowerStatusType.Down };
+
+        _cageRulesMock
+            .Setup(x => x.AssertCageIsPoweredOn(cage))
+            .Throws<InvalidOperationException>();
+
+        try
+        {
+            await _cageService.Create(cage);
+        }
+        catch
+        {
+            // kinda cheating the system, but we want to validate the update is NOT called
+            _cageRepositoryMock.Verify(x => x.Update(cage), Times.Never());
+        }
+    }
+
+    [Test]
     public async Task CagesAsync_WillPullFromRepository_WillReturnResults()
     {
         var cagesMocked = new List<ICage>
@@ -172,5 +193,39 @@ public class CageServiceTests
         var returnedCages = await _cageService.CageAsync(idUnderTest);
 
         Assert.That(returnedCages, Is.SameAs(cage));
+    }
+
+    [Test]
+    public async Task UpdateAsync_WhenCageIsProvided_WillInvokeUpdateOnRepository()
+    {
+        var idUnderTest = 100;
+        var cage = new Cage() { Id = idUnderTest, PowerStatus = PowerStatusType.Active };
+
+        _cageRulesMock.Setup(x => x.AssertCageIsPoweredOn(cage));
+
+        await _cageService.UpdateAsync(cage);
+
+        _cageRepositoryMock.Verify(x => x.Update(cage), Times.Once());
+    }
+
+    [Test]
+    public async Task UpdateAsync_WhenCageNotPoweredOn_WillNotInvokeUpdate()
+    {
+        var idUnderTest = 100;
+        var cage = new Cage() { Id = idUnderTest, PowerStatus = PowerStatusType.Down };
+
+        _cageRulesMock
+            .Setup(x => x.AssertCageIsPoweredOn(cage))
+            .Throws<InvalidOperationException>();
+
+        try
+        {
+            await _cageService.UpdateAsync(cage);
+        }
+        catch
+        {
+            // kinda cheating the system, but we want to validate the update is NOT called
+            _cageRepositoryMock.Verify(x => x.Update(cage), Times.Never());
+        }
     }
 }

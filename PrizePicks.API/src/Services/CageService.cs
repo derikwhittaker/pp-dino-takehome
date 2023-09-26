@@ -11,6 +11,7 @@ public interface ICageService
     Task<IEnumerable<ICage>> CagesAsync();
     Task<ICage> CageAsync(int cageId);
     Task<ICage> Create(ICage cage);
+    Task<ICage> UpdateAsync(ICage cage);
 
     public Task AssociateDinosaurAsync(ICage cage, IDinosaur dinosaur);
     Task<ICage> UpdatePowerStatus(int cageId, PowerStatusType powerStatus);
@@ -71,6 +72,23 @@ public class CageService : ICageService
         _logger.LogInformation($"Attempting to create a new Cage");
 
         // canot create a cage that is not powered on
+        _cageRules.AssertCageIsPoweredOn(cage);
+
+        await _cageRepository.Update(cage);
+
+        return cage;
+    }
+
+    /// <summary>
+    /// Will attempt to update an existing cage
+    /// Will return the newly updated cage
+    /// </summary>
+    /// <param name="cage"></param>
+    /// <returns>ICage</returns>
+    public async Task<ICage> UpdateAsync(ICage cage)
+    {
+        _logger.LogInformation($"Attempting to update an existing Cage with Id {cage.Id}");
+
         _cageRules.AssertCageIsPoweredOn(cage);
 
         await _cageRepository.Update(cage);

@@ -58,6 +58,14 @@ public class CageRepository : ICageRepository
         {
             cage.Id = new Random().Next(100);
         }
+        else
+        {
+            var cages = await _database.CagesAsync();
+            if (!cages.Any(x => x.Id == cage.Id))
+            {
+                throw new KeyNotFoundException($"Unable to find Cage w/ id {cage.Id}");
+            }
+        }
 
         // because we are not using sql, this is bit more work.
         _database.Update(cage);

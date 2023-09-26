@@ -73,10 +73,30 @@ public class CagesController : ControllerBase
 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
-    public async Task<ActionResult<ICage>> UpdateAsync()
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ICage>> UpdateAsync(Cage cage)
     {
-        _logger.LogInformation("Attempting to update a Cages");
-        return new Cage();
+        _logger.LogInformation($"Attempting to update a Cage with id {cage.Id}");
+
+        try
+        {
+            var updatedCage = await _cageService.UpdateAsync(cage);
+
+            return Ok(updatedCage);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            _logger.LogError(knfException.Message);        
+            return NotFound($"No Cage found for provided key {cage.Id}");
+        }
+        catch (InvalidOperationException ioException)
+        {
+            _logger.LogError(ioException.Message);
+            return BadRequest(
+                $"Cage canot be updated unless it is powered on.  use /poweroff route to powerdown the cage"
+            );
+        }
     }
 
     [HttpPut]
