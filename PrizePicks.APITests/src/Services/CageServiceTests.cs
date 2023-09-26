@@ -170,7 +170,10 @@ public class CageServiceTests
     public async Task UpdatePowerStatus_WhenPoweringDown_And_HasDinosaurs_WillThrowException()
     {
         var idUnderTest = 99;
-        var dinosaurs = new List<IDinosaur> { new Dinosaur() };
+        var dinosaurs = new List<IDinosaur>
+        {
+            new Dinosaur { Name = "Fred", Species = new Species() }
+        };
         var cage = new Cage(dinosaurs) { Id = idUnderTest, PowerStatus = PowerStatusType.Active };
 
         // force cage repo to pull back the right cage for us]]

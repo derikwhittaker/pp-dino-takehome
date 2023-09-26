@@ -12,10 +12,20 @@ public class CageTests
     {
         var initialDinosaurs = new List<IDinosaur>
         {
-            new Dinosaur { Id = 1, Name = "Fred" }
+            new Dinosaur
+            {
+                Id = 1,
+                Name = "Fred",
+                Species = new Species()
+            }
         };
 
-        var dinoToAssociate = new Dinosaur { Id = 1, Name = "New Fred" };
+        var dinoToAssociate = new Dinosaur
+        {
+            Id = 1,
+            Name = "New Fred",
+            Species = new Species()
+        };
 
         var cage = new Cage(initialDinosaurs);
 
@@ -33,10 +43,20 @@ public class CageTests
     {
         var initialDinosaurs = new List<IDinosaur>
         {
-            new Dinosaur { Id = 2, Name = "Fred" }
+            new Dinosaur
+            {
+                Id = 2,
+                Name = "Fred",
+                Species = new Species()
+            }
         };
 
-        var dinoToAssociate = new Dinosaur { Id = 1, Name = "New Fred" };
+        var dinoToAssociate = new Dinosaur
+        {
+            Id = 1,
+            Name = "New Fred",
+            Species = new Species()
+        };
 
         var cage = new Cage(initialDinosaurs);
 

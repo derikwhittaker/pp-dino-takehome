@@ -26,7 +26,15 @@ public class DinosaurRepositoryTests
     [Test]
     public async Task DinosaursAsync_Will_PullListFromUnderlyingDB()
     {
-        var dinosaursUnderMock = new List<IDinosaur> { new Dinosaur { Id = 1 } };
+        var dinosaursUnderMock = new List<IDinosaur>
+        {
+            new Dinosaur
+            {
+                Id = 1,
+                Name = "Fred",
+                Species = new Species()
+            }
+        };
 
         _databaseMock.Setup(db => db.DinosaursAsync().Result).Returns(dinosaursUnderMock);
 

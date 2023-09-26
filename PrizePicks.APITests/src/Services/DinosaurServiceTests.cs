@@ -30,7 +30,12 @@ public class DinosaurServiceTests
     {
         var DinosaursMocked = new List<IDinosaur>
         {
-            new Dinosaur() { Id = 100, Name = "Fred" }
+            new Dinosaur()
+            {
+                Id = 100,
+                Name = "Fred",
+                Species = new Species()
+            }
         };
 
         _dinosaurRepositoryMock.Setup(x => x.DinosaursAsync().Result).Returns(DinosaursMocked);

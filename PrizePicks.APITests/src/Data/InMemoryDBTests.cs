@@ -102,13 +102,20 @@ public class InMemoryDBTests
     [Test]
     public void Dinosaurs_Remove_WhenInvalidIdProvided_WillThrowException()
     {
-        Assert.Throws<ArgumentException>(() => _inMemoryDB.Remove(new Dinosaur()));
+        Assert.Throws<ArgumentException>(
+            () => _inMemoryDB.Remove(new Dinosaur { Name = "Fred", Species = new Species() })
+        );
     }
 
     [Test]
     public async Task Dinosaurs_Remove_WhenValidIdProvided_WillRemoveFromList()
     {
-        var cageToRemove = new Dinosaur { Id = 2 };
+        var cageToRemove = new Dinosaur
+        {
+            Id = 2,
+            Name = "Fred",
+            Species = new Species()
+        };
 
         var updatedDinos = await _inMemoryDB.DinosaursAsync();
         var expectedFinalDinosaurCount = updatedDinos.Count() - 1;
@@ -122,7 +129,12 @@ public class InMemoryDBTests
     [Test]
     public async Task Dinosaurs_Remove_WhenInValidIdProvided_WillNotRemoveFromList()
     {
-        var cageToRemove = new Dinosaur { Id = 222 };
+        var cageToRemove = new Dinosaur
+        {
+            Id = 222,
+            Name = "Fred",
+            Species = new Species()
+        };
         var updatedDinos = await _inMemoryDB.DinosaursAsync();
         var expectedFinalDinosaurCount = updatedDinos.Count();
 
@@ -151,7 +163,12 @@ public class InMemoryDBTests
     [Test]
     public async Task Dinosaurs_Update_WhenExistingIsNotItemFound_WillAddNewInstance()
     {
-        var dinosuarToUpdate = new Dinosaur { Id = 44, Name = "TestName" };
+        var dinosuarToUpdate = new Dinosaur
+        {
+            Id = 44,
+            Name = "TestName",
+            Species = new Species()
+        };
         var dinos = await _inMemoryDB.DinosaursAsync();
         var expectedNewDionsaurCount = dinos.Count() + 1;
 
