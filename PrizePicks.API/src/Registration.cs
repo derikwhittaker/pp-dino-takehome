@@ -11,6 +11,7 @@ public class Registration : Module
     {
         // Services
         builder.RegisterType<CageService>().As<ICageService>();
+        builder.RegisterType<DinosaurService>().As<IDinosaurService>();
 
         // Rules
         builder.RegisterType<CageRules>().As<ICageRules>();

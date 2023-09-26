@@ -21,8 +21,8 @@ public class InMemoryDBTests
     public async Task Seed_WillBuildDataCorrectly()
     {
         var expectedSpeciesCount = 8;
-        var expectedDinosoaurCount = 9;
-        var expectedCageCount = 2;
+        var expectedDinosoaurCount = 10;
+        var expectedCageCount = 3;
 
         var species = _inMemoryDB.Species();
         var dinosaurs = await _inMemoryDB.DinosaursAsync();
@@ -135,7 +135,6 @@ public class InMemoryDBTests
     [Test]
     public async Task Dinosaurs_Update_WhenExistingItemFound_WillReplaceWithNewInstance()
     {
-
         var dinos = await _inMemoryDB.DinosaursAsync();
         var dinosaurToUpdate = dinos.Where(x => x.Id == 2).First();
 

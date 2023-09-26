@@ -1,14 +1,12 @@
 namespace PrizePicks.API.Models;
 
-public interface ISpecies
+public class Species
 {
-    public FoodType Food { get; }
+    /// <summary>
+    /// This is needed for WebAPI serializ
+    /// </summary>
+    public Species() { }
 
-    public SpeciesType SpeciesType { get; }
-}
-
-public class Species : ISpecies
-{
     public Species(FoodType food, SpeciesType species)
     {
         Food = food;

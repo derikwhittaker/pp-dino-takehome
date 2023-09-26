@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using PrizePicks.API.Models;
+using PrizePicks.API.Services;
 
 namespace PrizePicks.WebAPI.Controllers;
 
@@ -10,37 +11,64 @@ namespace PrizePicks.WebAPI.Controllers;
 public class DinosaursController : ControllerBase
 {
     private readonly ILogger<DinosaursController> _logger;
+    private readonly IDinosaurService _dinosaurService;
 
-    public DinosaursController(ILogger<DinosaursController> logger)
+    public DinosaursController(
+        ILogger<DinosaursController> logger,
+        IDinosaurService dinosaurService
+    )
     {
         _logger = logger;
+        _dinosaurService = dinosaurService;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
-    public async Task<ActionResult<IEnumerable<IDinosaur>>> GetDinosaur()
+    public async Task<ActionResult<IEnumerable<IDinosaur>>> GetAllAsync()
     {
-        _logger.LogInformation($"Attempting to get all Dinosaurs");
-        return Enumerable.Range(1, 5).Select(index => new Dinosaur()).ToArray();
+        _logger.LogInformation($"Attempting to get all Dinosaurs from repo");
+        var dinosaurs = await _dinosaurService.DinosaursAsync();
+
+        return Ok(dinosaurs);
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
     [Route("{dinosaurId}")]
-    public async Task<ActionResult<IDinosaur>> GetSingle(int dinosaurId)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IDinosaur>> GetSingleAsync(int dinosaurId)
     {
-        _logger.LogInformation($"Attempting to Dinosaur for id {dinosaurId}");
-        return new Dinosaur { Id = dinosaurId };
+        _logger.LogInformation($"Attempting to Cages for id {dinosaurId}");
+
+        try
+        {
+            var dinosaur = await _dinosaurService.DinosaurAsync(dinosaurId);
+
+            return Ok(dinosaur);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            return NotFound(knfException.Message);
+        }
     }
 
-    [HttpPost(Name = "Dinosaur")]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(IDinosaur))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IDinosaur>> Create(Dinosaur dinosaur)
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dinosaur))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IDinosaur>> CreateAsync(Dinosaur dinosaur)
     {
-        _logger.LogInformation($"Attempting to create a new Dinosaur");
-        // return dinosaur;
-        return NotFound();
+        _logger.LogInformation("Attempting to create a new Dinosaur");
+
+        try
+        {
+            var updatedDinosaur = await _dinosaurService.CreateAsync(dinosaur);
+
+            return Ok(updatedDinosaur);
+        }
+        catch (InvalidOperationException ioException)
+        {
+            return BadRequest(ioException.Message);
+        }
     }
 
     [HttpPut(Name = "Dinosaur")]

@@ -6,7 +6,7 @@ public class InMemoryDB : IDatabase
 {
     private static IList<ICage> _cages { get; set; }
     private static IList<IDinosaur> _dinosaurs { get; set; }
-    private static IList<ISpecies> _species { get; set; }
+    private static IList<Species> _species { get; set; }
 
     public async Task<IEnumerable<ICage>> CagesAsync()
     {
@@ -84,7 +84,7 @@ public class InMemoryDB : IDatabase
         _dinosaurs.Add(instance);
     }
 
-    public IEnumerable<ISpecies> Species()
+    public IEnumerable<Species> Species()
     {
         return _species;
     }
@@ -205,7 +205,7 @@ public class InMemoryDB : IDatabase
 
     private static void SeedSpecies()
     {
-        _species = new List<ISpecies>
+        _species = new List<Species>
         {
             new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus),
             new Species(FoodType.Carnivore, SpeciesType.Velociraptor),
