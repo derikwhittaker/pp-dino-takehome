@@ -1,7 +1,6 @@
-using PrizePicks.API.Data;
 using PrizePicks.API.Models;
 
-namespace PrizePicks.API.Services;
+namespace PrizePicks.API.Data;
 
 [TestFixture]
 public class DinosaurRepositoryTests

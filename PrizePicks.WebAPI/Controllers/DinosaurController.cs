@@ -75,7 +75,8 @@ public class DinosaursController : ControllerBase
     [HttpPut(Name = "Dinosaur")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDinosaur))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<IDinosaur>> Update(Dinosaur dinosaur)
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IDinosaur>> UpdateAsync(Dinosaur dinosaur)
     {
         _logger.LogInformation("Attempting to update an existing Dinosaur");
 
@@ -90,6 +91,10 @@ public class DinosaursController : ControllerBase
         catch (InvalidOperationException ioException)
         {
             return BadRequest(ioException.Message);
+        }
+        catch (KeyNotFoundException knfException)
+        {
+            return NotFound(knfException.Message);
         }
     }
 }

@@ -1,5 +1,6 @@
-using PrizePicks.API.Data;
 using PrizePicks.API.Models;
+
+namespace PrizePicks.API.Data;
 
 [TestFixture]
 public class InMemoryDBTests

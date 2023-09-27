@@ -52,7 +52,7 @@ public class CagesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Cage))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Cage>> CreateAsync(Cage cage)
+    public async Task<ActionResult<ICage>> CreateAsync(Cage cage)
     {
         _logger.LogInformation("Attempting to create a new Cages");
 
@@ -114,9 +114,9 @@ public class CagesController : ControllerBase
         {
             return BadRequest(ioException.Message);
         }
-         catch (KeyNotFoundException knfException)
+        catch (KeyNotFoundException knfException)
         {
-            return BadRequest(knfException.Message);
+            return NotFound(knfException.Message);
         }
     }
 
