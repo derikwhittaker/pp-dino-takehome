@@ -41,5 +41,10 @@ cal
 dotnet format style -v detailed --severity info --verify-no-changes
 ```
 
+## Swagger Testing
+You can view/test the API w/ swagger by following the steps below
+1. Run the WebAPI project `dotnet run`
+2. Open any browser and navigage to [Swagger Page](http://localhost:5191/swagger/index.html) `http://localhost:5191/swagger/index.html`
+
 ## Postman Testing
 There is an included Postman collection.  For details on using the collection, [read this](PostmanTesting.md)
