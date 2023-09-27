@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Logging;
-
-using Moq;
-
 using PrizePicks.API.Models;
 using PrizePicks.API.Rules;
 

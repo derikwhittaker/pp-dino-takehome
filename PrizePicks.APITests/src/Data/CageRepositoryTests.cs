@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Logging;
-
-using Moq;
-
 using PrizePicks.API.Data;
 using PrizePicks.API.Models;
 
@@ -22,7 +18,6 @@ public class CageRepositoryTests
 
         _cageRepository = new CageRepository(_loggerMock.Object, _databaseMock.Object);
     }
-
     [Test]
     public async Task CagesAsync_Will_PullListFromUnderlyingDB()
     {

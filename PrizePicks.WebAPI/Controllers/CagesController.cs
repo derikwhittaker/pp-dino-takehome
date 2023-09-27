@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using PrizePicks.API.Models;
 using PrizePicks.API.Services;

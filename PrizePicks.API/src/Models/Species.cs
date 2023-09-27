@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace PrizePicks.API.Models;
 
 public class Species

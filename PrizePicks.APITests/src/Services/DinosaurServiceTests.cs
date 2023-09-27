@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Logging;
-
-using Moq;
-
 using PrizePicks.API.Data;
 using PrizePicks.API.Models;
 using PrizePicks.API.Rules;
@@ -83,7 +79,6 @@ public class DinosaurServiceTests
 
         _dinosaurRepositoryMock.Verify(x => x.UpdateAsync(dinosaurUndertest), Times.Once());
     }
-
 
     [Test]
     public async Task UpdateAsync_WhenNameIsNotProvided_WillThrowException()

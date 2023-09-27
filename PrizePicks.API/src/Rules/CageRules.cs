@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 using PrizePicks.API.Models;
 
 namespace PrizePicks.API.Rules;

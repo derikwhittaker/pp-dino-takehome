@@ -1,6 +1,3 @@
-using Microsoft.Extensions.Logging;
-using System.Text.Json;
-
 using PrizePicks.API.Data;
 using PrizePicks.API.Models;
 using PrizePicks.API.Rules;
