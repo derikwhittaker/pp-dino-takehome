@@ -1,0 +1,702 @@
+{
+	"info": {
+		"_postman_id": "a94230ca-2722-4a8a-b137-6547184c0100",
+		"name": "PrizePicks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3634861"
+	},
+	"item": [
+		{
+			"name": "Cages - Get All",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/Cages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"Cages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Get Single",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/Cages/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"Cages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Get Single - Failure",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/Cages/122",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"Cages",
+						"122"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Capacity\": \"10\",\n    \"PowerStatus\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Id\": 111,\n    \"Capacity\": \"10\",\n    \"PowerStatus\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Update - Failure",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Id\": 111,\n    \"Capacity\": \"10\",\n    \"PowerStatus\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Powerdown - Single",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/powerdown",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"powerdown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Powerdown - Single - Failure",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/powerdown",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"powerdown"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Powerup - Single",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/cages/2/powerup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"2",
+						"powerup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Powerup - Single - Bad id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/cages/2/powerup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"2",
+						"powerup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Associate Dino - Valid",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/associatedinosaur/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"associatedinosaur",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Associate Dino - Fail - Invalid Cage id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1,\n    \"dinosaur\": {\n        \"Id\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/999/associatedinosaur/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"999",
+						"associatedinosaur",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Associate Dino - Fail - Invalid Dino id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1,\n    \"dinosaur\": {\n        \"Id\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/associatedinosaur/999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"associatedinosaur",
+						"999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Associate Dino - Fail - Invalid Dino for Cage",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1,\n    \"dinosaur\": {\n        \"Id\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/associatedinosaur/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"associatedinosaur",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Associate Dino - Fail - Cage at Capacity",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1,\n    \"dinosaur\": {\n        \"Id\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/3/associatedinosaur/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"3",
+						"associatedinosaur",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Unassociate Dino - Valid",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/unassociatedinosaur/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"unassociatedinosaur",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Unassociate Dino - Invalid - Bad Dino",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/unassociatedinosaur/222",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"unassociatedinosaur",
+						"222"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Get - All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Get - Single",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Get - Single - Invalid Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs/133",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs",
+						"133"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n    \"Name\": \"\",\n    \"Species\": {\n        \"Food\": 1,\n        \"SpeciesType\": 2\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Create - Invalid - Missing Name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n    \"Name\": \"\",\n    \"Species\": {\n        \"Food\": 1,\n        \"SpeciesType\": 2\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Id\": \"1\",\n    \"Name\": \"Fred\",\n    \"Food\": 2,\n    \"Species\": {\n        \"Food\": \"1\",\n        \"SpeciesType\": 2\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dinosaurs - Update - Invalid - Missing Name",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"Id\": \"1\",\n    \"Name\": \"\",\n    \"Species\": {\n        \"Food\": 1,\n        \"SpeciesType\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/dinosaurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"dinosaurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cages - Unassociate Dino - Invalid - Bad Cage",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cageId\" : 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5191/api/cages/1/unassociatedinosaur/222",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5191",
+					"path": [
+						"api",
+						"cages",
+						"1",
+						"unassociatedinosaur",
+						"222"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
