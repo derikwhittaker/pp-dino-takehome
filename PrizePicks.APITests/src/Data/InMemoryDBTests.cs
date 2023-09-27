@@ -5,7 +5,7 @@ namespace PrizePicks.API.Data;
 [TestFixture]
 public class InMemoryDBTests
 {
-    private InMemoryDB _inMemoryDB = new InMemoryDB();
+    private readonly InMemoryDB _inMemoryDB = new();
 
     [SetUp]
     public void Setup()

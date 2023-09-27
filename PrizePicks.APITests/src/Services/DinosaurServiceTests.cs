@@ -7,9 +7,9 @@ namespace PrizePicks.API.Services;
 [TestFixture]
 public class DinosaurServiceTests
 {
-    private Mock<ILogger<DinosaurService>> _loggerMock = new Mock<ILogger<DinosaurService>>();
-    private Mock<IDinosaurRepository> _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
-    private Mock<IDinosaurRules> _dinosaurRulesMock = new Mock<IDinosaurRules>();
+    private readonly Mock<ILogger<DinosaurService>> _loggerMock = new();
+    private Mock<IDinosaurRepository> _dinosaurRepositoryMock = new();
+    private Mock<IDinosaurRules> _dinosaurRulesMock = new();
 
     private IDinosaurService _dinosaurService;
 

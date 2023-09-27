@@ -1,4 +1,3 @@
-
 using PrizePicks.API.Models;
 
 namespace PrizePicks.API.Data;
@@ -42,13 +41,9 @@ public class DinosaurRepository : IDinosaurRepository
     public async Task<IDinosaur> DinosaurAsync(int dinosaurId)
     {
         var dinosaurs = await _database.DinosaursAsync();
-        var foundDinosaur = dinosaurs.Where(x => x.Id == dinosaurId).FirstOrDefault();
-
-        // Need to return the caller when something is not found.
-        if (foundDinosaur == null)
-        {
-            throw new KeyNotFoundException($"Unable to find Dinosaur w/ id {dinosaurId}");
-        }
+        var foundDinosaur =
+            dinosaurs.Where(x => x.Id == dinosaurId).FirstOrDefault()
+            ?? throw new KeyNotFoundException($"Unable to find Dinosaur w/ id {dinosaurId}");
 
         return foundDinosaur;
     }

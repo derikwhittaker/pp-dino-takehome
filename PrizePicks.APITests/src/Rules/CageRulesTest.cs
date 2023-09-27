@@ -6,9 +6,7 @@ namespace PrizePicks.APITests.Rules;
 [TestFixture]
 public class CageRulesTests
 {
-    private readonly Mock<ILogger<CageRulesTests>> _loggerMock =
-        new Mock<ILogger<CageRulesTests>>();
-    private ICageRules _cageRules = new CageRules(new Mock<ILogger<CageRules>>().Object);
+    private readonly ICageRules _cageRules = new CageRules(new Mock<ILogger<CageRules>>().Object);
 
     [Test]
     public void AssertCageNotAtCapacity_When_CageCapacity_HasNotBeenReached_WillPass()

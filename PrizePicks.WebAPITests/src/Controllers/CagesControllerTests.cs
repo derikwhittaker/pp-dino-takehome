@@ -10,8 +10,8 @@ namespace PrizePicks.WebAPITests.Controllers;
 [TestFixture]
 public class CageControllerTests
 {
-    private Mock<ILogger<CagesController>> _loggerMock = new Mock<ILogger<CagesController>>();
-    private Mock<ICageService> _cageServiceMock = new Mock<ICageService>();
+    private readonly Mock<ILogger<CagesController>> _loggerMock = new();
+    private Mock<ICageService> _cageServiceMock = new();
 
     private CagesController _cageController;
 

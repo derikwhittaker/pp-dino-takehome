@@ -17,7 +17,7 @@ public class Cage : ICage
 {
     public Cage() { }
 
-    private IList<IDinosaur> _dinosaurs = new List<IDinosaur>();
+    private readonly IList<IDinosaur> _dinosaurs = new List<IDinosaur>();
 
     public Cage(IList<IDinosaur> dinosaurs)
     {

@@ -43,13 +43,9 @@ public class CageRepository : ICageRepository
     public async Task<ICage> CageAsync(int cageId)
     {
         var cages = await _database.CagesAsync();
-        var foundCage = cages.Where(x => x.Id == cageId).FirstOrDefault();
-
-        // Need to return the caller when something is not found.
-        if (foundCage == null)
-        {
-            throw new KeyNotFoundException($"Unable to find Cage w/ id {cageId}");
-        }
+        var foundCage =
+            cages.Where(x => x.Id == cageId).FirstOrDefault()
+            ?? throw new KeyNotFoundException($"Unable to find Cage w/ id {cageId}");
 
         return foundCage;
     }

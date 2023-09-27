@@ -8,9 +8,9 @@ namespace PrizePicks.WebAPI.Controllers;
 [TestFixture]
 public class DinosaursControllerTests
 {
-    private Mock<ILogger<DinosaursController>> _loggerMock =
-        new Mock<ILogger<DinosaursController>>();
-    private Mock<IDinosaurService> _dinosaurServiceMock = new Mock<IDinosaurService>();
+    private readonly Mock<ILogger<DinosaursController>> _loggerMock =
+        new();
+    private Mock<IDinosaurService> _dinosaurServiceMock = new();
 
     private DinosaursController _dinosaurController;
 

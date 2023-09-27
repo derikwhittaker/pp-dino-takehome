@@ -5,8 +5,9 @@ namespace PrizePicks.API.Data;
 [TestFixture]
 public class CageRepositoryTests
 {
-    private Mock<ILogger<CageRepository>> _loggerMock = new Mock<ILogger<CageRepository>>();
-    private Mock<IDatabase> _databaseMock = new Mock<IDatabase>();
+    private readonly Mock<ILogger<CageRepository>> _loggerMock =
+        new();
+    private Mock<IDatabase> _databaseMock = new();
 
     private ICageRepository _cageRepository;
 

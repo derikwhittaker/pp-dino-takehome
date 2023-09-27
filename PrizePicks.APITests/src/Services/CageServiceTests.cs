@@ -7,10 +7,10 @@ namespace PrizePicks.API.Services;
 [TestFixture]
 public class CageServiceTests
 {
-    private Mock<ILogger<CageService>> _loggerMock = new Mock<ILogger<CageService>>();
-    private Mock<ICageRepository> _cageRepositoryMock = new Mock<ICageRepository>();
-    private Mock<IDinosaurRepository> _dinosaurRepositoryMock = new Mock<IDinosaurRepository>();
-    private Mock<ICageRules> _cageRulesMock = new Mock<ICageRules>();
+    private readonly Mock<ILogger<CageService>> _loggerMock = new();
+    private Mock<ICageRepository> _cageRepositoryMock = new();
+    private Mock<IDinosaurRepository> _dinosaurRepositoryMock = new();
+    private Mock<ICageRules> _cageRulesMock = new();
 
     private ICageService _cageService;
 

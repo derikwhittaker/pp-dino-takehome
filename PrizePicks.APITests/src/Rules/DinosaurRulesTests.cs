@@ -6,8 +6,7 @@ namespace PrizePicks.APITests.Rules;
 [TestFixture]
 public class DinosaurRulesTests
 {
-    private readonly Mock<ILogger<DinosaurRules>> _loggerMock = new Mock<ILogger<DinosaurRules>>();
-    private IDinosaurRules _dinosaurRules = new DinosaurRules(
+    private readonly IDinosaurRules _dinosaurRules = new DinosaurRules(
         new Mock<ILogger<DinosaurRules>>().Object
     );
 

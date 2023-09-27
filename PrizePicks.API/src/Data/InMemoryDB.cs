@@ -4,13 +4,13 @@ namespace PrizePicks.API.Data;
 
 public class InMemoryDB : IDatabase
 {
-    private static IList<ICage> _cages { get; set; }
-    private static IList<IDinosaur> _dinosaurs { get; set; }
-    private static IList<Species> _species { get; set; }
+    private static IList<ICage> CagesDB { get; set; }
+    private static IList<IDinosaur> DinosaursDB { get; set; }
+    private static IList<Species> SpeciesDB { get; set; }
 
     public async Task<IEnumerable<ICage>> CagesAsync()
     {
-        return _cages;
+        return CagesDB;
     }
 
     public void RemoveAsync(ICage instance)
@@ -20,7 +20,7 @@ public class InMemoryDB : IDatabase
             throw new ArgumentException("Instace must have valid Id", nameof(instance));
         }
 
-        _cages = _cages.Where(x => x.Id != instance.Id).ToList();
+        CagesDB = CagesDB.Where(x => x.Id != instance.Id).ToList();
     }
 
     /// <summary>
@@ -43,12 +43,12 @@ public class InMemoryDB : IDatabase
 
         RemoveAsync(instance);
 
-        _cages.Add(instance);
+        CagesDB.Add(instance);
     }
 
     public async Task<IEnumerable<IDinosaur>> DinosaursAsync()
     {
-        return _dinosaurs;
+        return DinosaursDB;
     }
 
     public void RemoveAsync(IDinosaur instance)
@@ -58,7 +58,7 @@ public class InMemoryDB : IDatabase
             throw new ArgumentException("Instace must have valid Id", nameof(instance));
         }
 
-        _dinosaurs = _dinosaurs.Where(x => x.Id != instance.Id).ToList();
+        DinosaursDB = DinosaursDB.Where(x => x.Id != instance.Id).ToList();
     }
 
     /// <summary>
@@ -81,12 +81,12 @@ public class InMemoryDB : IDatabase
 
         RemoveAsync(instance);
 
-        _dinosaurs.Add(instance);
+        DinosaursDB.Add(instance);
     }
 
     public IEnumerable<Species> Species()
     {
-        return _species;
+        return SpeciesDB;
     }
 
     /// Seed/Populate below
@@ -103,77 +103,77 @@ public class InMemoryDB : IDatabase
 
     private static void SeedDinosaurs()
     {
-        _dinosaurs = new List<IDinosaur>
+        DinosaursDB = new List<IDinosaur>
         {
             new Dinosaur
             {
                 Id = 1,
                 Name = "T-Roary",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
             },
             new Dinosaur
             {
                 Id = 2,
                 Name = "Dizzy",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Megalosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Megalosaurus)
             },
             new Dinosaur
             {
                 Id = 3,
                 Name = "Spike",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Velociraptor)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Velociraptor)
             },
             new Dinosaur
             {
                 Id = 4,
                 Name = "T-Rexi",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
             },
             new Dinosaur
             {
                 Id = 5,
                 Name = "Rumble",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Spinosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Spinosaurus)
             },
             new Dinosaur
             {
                 Id = 6,
                 Name = "Leafia",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Brachiosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Brachiosaurus)
             },
             new Dinosaur
             {
                 Id = 7,
                 Name = "Staggy",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Stegosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Stegosaurus)
             },
             new Dinosaur
             {
                 Id = 8,
                 Name = "VeggieRex",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Ankylosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Ankylosaurus)
             },
             new Dinosaur
             {
                 Id = 9,
                 Name = "Toppie",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Triceratops)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Triceratops)
             },
             new Dinosaur
             {
                 Id = 10,
                 Name = "T-Short Arms",
-                Species = _species.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
+                Species = SpeciesDB.First(x => x.SpeciesType == SpeciesType.Tyrannosaurus)
             }
         };
     }
 
     private static void SeedCages()
     {
-        _cages = new List<ICage>
+        CagesDB = new List<ICage>
         {
             new Cage(
-                _dinosaurs
+                DinosaursDB
                     .Where(x => x.Species.SpeciesType == SpeciesType.Tyrannosaurus)
                     .Take(1)
                     .ToList()
@@ -190,7 +190,7 @@ public class InMemoryDB : IDatabase
                 Capacity = 1
             },
             new Cage(
-                _dinosaurs
+                DinosaursDB
                     .Where(x => x.Species.SpeciesType == SpeciesType.Spinosaurus)
                     .Take(1)
                     .ToList()
@@ -205,7 +205,7 @@ public class InMemoryDB : IDatabase
 
     private static void SeedSpecies()
     {
-        _species = new List<Species>
+        SpeciesDB = new List<Species>
         {
             new Species(FoodType.Carnivore, SpeciesType.Tyrannosaurus),
             new Species(FoodType.Carnivore, SpeciesType.Velociraptor),

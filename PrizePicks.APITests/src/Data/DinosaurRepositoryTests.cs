@@ -5,8 +5,9 @@ namespace PrizePicks.API.Data;
 [TestFixture]
 public class DinosaurRepositoryTests
 {
-    private Mock<ILogger<DinosaurRepository>> _loggerMock = new Mock<ILogger<DinosaurRepository>>();
-    private Mock<IDatabase> _databaseMock = new Mock<IDatabase>();
+    private readonly Mock<ILogger<DinosaurRepository>> _loggerMock =
+        new();
+    private Mock<IDatabase> _databaseMock = new();
 
     private IDinosaurRepository _dinosaurRepository;
 

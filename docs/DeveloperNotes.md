@@ -38,7 +38,7 @@ This project has linting/formatting enabled on save, but that is limited.  The p
 To run the validation execute the following from the terminal
 cal
 ```
-dotnet format style -v detailed --severity info --verify-no-changes
+dotnet format style -v detailed --severity info
 ```
 
 ## Swagger Testing
