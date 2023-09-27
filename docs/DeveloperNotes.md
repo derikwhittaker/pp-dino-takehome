@@ -1,7 +1,6 @@
 
 # Developer Notes
 
-
 ## Building Projects
 To build a given project follow the following
 1. Open a terminal, `cd` into the root folder for the project
@@ -41,3 +40,6 @@ cal
 ```
 dotnet format style -v detailed --severity info --verify-no-changes
 ```
+
+## Postman Testing
+There is an included Postman collection.  For details on using the collection, [read this](PostmanTesting.md)

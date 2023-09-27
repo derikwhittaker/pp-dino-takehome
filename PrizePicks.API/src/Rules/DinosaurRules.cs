@@ -27,7 +27,7 @@ public class DinosaurRules : IDinosaurRules
     ///     allowed allowed dinosaurs.
     /// </summary>
     /// <param name="cage"></param>
-    /// <exception cref="CagePowerExceptionException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public void AssertDinosaurHasName(IDinosaur dinosaur)
     {
         if (string.IsNullOrEmpty(dinosaur.Name))

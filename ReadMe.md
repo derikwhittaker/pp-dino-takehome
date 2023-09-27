@@ -45,6 +45,11 @@ I realized the specs called to use some flavor of sql, in memory sql and seeding
 
 The data will reset each time the application is restarted
 
+### IoC Registration
+Went with manual registration vs auto-registration for no real reason other than did not see the need to use reflection to register things.
+
+### Authorization
+In a real scenerio we would add auth to each API endpoint, but well that may be overkill for this example.
 
 ### Technology/Packages Used
 This does not have a persisted DB, because of the time constraint we are using json files and repository pattern to support db actions.  

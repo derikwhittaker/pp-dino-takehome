@@ -33,7 +33,7 @@ public class CageRules : ICageRules
     ///     allowed allowed dinosaurs.
     /// </summary>
     /// <param name="cage"></param>
-    /// <exception cref="CagePowerExceptionException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public void AssertCageNotAtCapacity(ICage cage)
     {
         if (cage.Capacity == cage.Dinosaurs.Count())
@@ -49,7 +49,7 @@ public class CageRules : ICageRules
     /// Will throw exception if the cage is not powered on
     /// </summary>
     /// <param name="cage"></param>
-    /// <exception cref="CagePowerExceptionException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public void AssertCageIsPoweredOn(ICage cage)
     {
         if (cage.PowerStatus != PowerStatusType.Active)
@@ -93,6 +93,7 @@ public class CageRules : ICageRules
     /// </summary>
     /// <param name="cage"></param>
     /// <param name="dinosaur"></param>
+    /// <exception cref="InvalidOperationException"></exception>
     public void AssertDinoValidForCage(ICage cage, IDinosaur dinosaur)
     {
         // If the cage is empty, we can exit now as we know we are good

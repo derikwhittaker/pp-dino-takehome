@@ -48,11 +48,3 @@ app.MapControllers();
 PrizePicks.API.Data.InMemoryDB.Seed();
 
 app.Run();
-
-// static void ConfigureLogging(ContainerBuilder builder)
-// {
-//     var seriLogger = new LoggerConfiguration();
-//     seriLogger.WriteTo.Console().MinimumLevel.Verbose();
-
-//     builder.RegisterSerilog(seriLogger);
-// }

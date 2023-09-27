@@ -7,6 +7,12 @@ using PrizePicks.API.Services;
 
 public class Registration : Module
 {
+    /// <summary>
+    /// Autofac registration here.  As new services are created, update them below
+    ///
+    /// Could have gone the route of auto registration, maybe next time.
+    /// </summary>
+    /// <param name="builder"></param>
     protected override void Load(ContainerBuilder builder)
     {
         // Services
@@ -20,6 +26,8 @@ public class Registration : Module
         // Data Registration
         builder.RegisterType<CageRepository>().As<ICageRepository>();
         builder.RegisterType<DinosaurRepository>().As<IDinosaurRepository>();
+
+        // This is what would change if we had a real DB backing store, not inmemory one
         builder.RegisterType<InMemoryDB>().As<IDatabase>();
     }
 }

@@ -96,6 +96,7 @@ public class CagesController : ControllerBase
     [Route("{cageId}/powerdown")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICage))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ICage>> PowerDownAsync(int cageId)
     {
         _logger.LogInformation($"Attempting to powerdown Cage with id {cageId}");
@@ -112,6 +113,10 @@ public class CagesController : ControllerBase
         catch (InvalidOperationException ioException)
         {
             return BadRequest(ioException.Message);
+        }
+         catch (KeyNotFoundException knfException)
+        {
+            return BadRequest(knfException.Message);
         }
     }
 

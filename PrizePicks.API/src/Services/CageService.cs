@@ -100,6 +100,14 @@ public class CageService : ICageService
         return cage;
     }
 
+    /// <summary>
+    /// Will attempt to associate a dinosaur to a given cage.
+    ///
+    /// There are a set of rules that have to be satisfied first.
+    /// </summary>
+    /// <param name="cageId"></param>
+    /// <param name="dinosaurId"></param>
+    /// <returns>Updated ICage</returns>
     public async Task<ICage> AssociateDinosaurAsync(int cageId, int dinosaurId)
     {
         _logger.LogInformation($"Attempt add Dino with ID {dinosaurId} to Cage with Id {cageId}");
@@ -126,6 +134,12 @@ public class CageService : ICageService
         return cage;
     }
 
+    /// <summary>
+    /// Will attempt to remove the dinosaur from a cage.
+    /// </summary>
+    /// <param name="cageId"></param>
+    /// <param name="dinosaurId"></param>
+    /// <returns>Updated ICage</returns>
     public async Task<ICage> UnassociateDinosaurAsync(int cageId, int dinosaurId)
     {
         _logger.LogInformation(
@@ -144,6 +158,17 @@ public class CageService : ICageService
         return cage;
     }
 
+    /// <summary>
+    /// Will toggle the power status of a cage based on the provided status value.
+    ///
+    /// The rules will change based on power on or power off.
+    ///
+    /// The end result will be the cage power status changing
+    /// </summary>
+    /// <param name="cageId"></param>
+    /// <param name="powerStatus"></param>
+    /// <returns>Updated ICage</returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<ICage> UpdatePowerStatusAsync(int cageId, PowerStatusType powerStatus)
     {
         // Pull the latest/greatest cage
